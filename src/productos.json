@@ -11,7 +11,7 @@
     "status": true
   },
   {
-    "title": "producto2",
+    "title": "Titulo modificado papayo",
     "description": "producto2descripcion",
     "code": "P002",
     "price": "15000",
@@ -19,6 +19,28 @@
     "category": "Accesorios",
     "thumbnails": "",
     "id": 2,
+    "status": true
+  },
+  {
+    "title": "Titulo modificado papayo",
+    "description": "producto1descripcion",
+    "code": "P001",
+    "price": "1500",
+    "stock": "23",
+    "category": "ospkdfpsf",
+    "thumbnails": "",
+    "id": 3,
+    "status": true
+  },
+  {
+    "title": "producto3",
+    "description": "producto3descripcion",
+    "code": "P003",
+    "price": "1500",
+    "stock": "23",
+    "category": "ospkdfpsf",
+    "thumbnails": "/img/03.png",
+    "id": 4,
     "status": true
   }
 ]

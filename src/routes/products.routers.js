@@ -27,6 +27,16 @@ function leerProductos(limit) {
     });
 }
 
+function guardarProductos(products, res , msg){
+    fs.writeFile(productPath, JSON.stringify(products, null, 2), (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error al guardar el producto' });
+        }
+            res.json({ message: msg });
+    });
+}
+
 //Endpoints
 // Leemos todos los productos con limite si existe
 router.get("/products", async(req, res) => {
@@ -65,20 +75,14 @@ router.post("/api/products", async(req,res) => {
         const products = await leerProductos(0);
         const productExists = products.find((p) => p.code === newProduct.code);
           if (productExists) {
-            return res.status(500).json({ error: 'El producto ya se encuentra ingresado' });
+           return res.status(500).json({ error: 'El producto ya se encuentra ingresado' });
           }
         //Si el producto no esta repetido se ingresa
         const lastId = Math.max(...products.map((p) => p.id),0);
         newProduct.id = lastId + 1;
         newProduct.status = true
         products.push(newProduct)
-    fs.writeFile(productPath, JSON.stringify(products, null, 2), (err) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Error al guardar el producto' });
-        }
-        res.json({ message: "Producto agregado" });
-    });
+        guardarProductos(products, res, "Producto Agregado")
     } else {
         res.json({ message: "Favor complete todos los campos requeridos" });
     }
@@ -88,29 +92,24 @@ router.post("/api/products", async(req,res) => {
 //Modificamos un producto
 router.put("/api/products/:pid", async(req,res) => {
     const newProduct = req.body
-    //validamos los campos el producto
-    if (newProduct.title && newProduct.description && newProduct.code && newProduct.price && newProduct.stock && newProduct.category !== undefined) {
-        //validamos que el producto code no este repetido
-        const products = await leerProductos(0);
-        const productExists = products.find((p) => p.code === newProduct.code);
-          if (productExists) {
-            return res.status(500).json({ error: 'El producto ya se encuentra ingresado' });
-          }
-        //Si el producto no esta repetido se ingresa
-        const lastId = Math.max(...products.map((p) => p.id),0);
-        newProduct.id = lastId + 1;
-        newProduct.status = true
-        products.push(newProduct)
-    fs.writeFile(productPath, JSON.stringify(products, null, 2), (err) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Error al guardar el producto' });
-        }
-        res.json({ message: "Producto agregado" });
-    });
-    } else {
-        res.json({ message: "Favor complete todos los campos requeridos" });
+    const productId = parseInt(req.params.pid)
+
+    //obtenemos el producto a modificar si existe
+     const products = await leerProductos(0);
+     const productIndex = products.findIndex((product) => product.id === productId);
+     if (productIndex === -1) {
+       return res.status(404).json({message: "Producto no encontrado"})
     }
+
+     // Filtramos que los datos vacios no sobreescriban los existentes
+     const updateProduct = { ...products[productIndex] }
+     for (const key in newProduct){
+        if (newProduct[key] !== undefined && newProduct[key] !== ""){
+            updateProduct[key] = newProduct[key];
+        }
+     }
+     products[productIndex] = updateProduct;
+     guardarProductos(products,res,"Producto Actualizado")
     
 })
 
