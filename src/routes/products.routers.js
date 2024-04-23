@@ -37,6 +37,15 @@ function guardarProductos(products, res , msg){
     });
 }
 
+function encontrarProducto(products,id,res){
+    const productIndex = products.findIndex((product) => product.id === id);
+    if (productIndex === -1) {
+        res.status(404).json({message: "Producto no encontrado"})
+        return []
+     }
+    return productIndex
+}
+
 //Endpoints
 // Leemos todos los productos con limite si existe
 router.get("/products", async(req, res) => {
@@ -93,14 +102,13 @@ router.post("/api/products", async(req,res) => {
 router.put("/api/products/:pid", async(req,res) => {
     const newProduct = req.body
     const productId = parseInt(req.params.pid)
+    const products = await leerProductos(0);
 
     //obtenemos el producto a modificar si existe
-     const products = await leerProductos(0);
-     const productIndex = products.findIndex((product) => product.id === productId);
-     if (productIndex === -1) {
-       return res.status(404).json({message: "Producto no encontrado"})
-    }
-
+     const productIndex = encontrarProducto(products,productId,res)
+     if(productIndex){
+        return
+     }else{
      // Filtramos que los datos vacios no sobreescriban los existentes
      const updateProduct = { ...products[productIndex] }
      for (const key in newProduct){
@@ -110,7 +118,21 @@ router.put("/api/products/:pid", async(req,res) => {
      }
      products[productIndex] = updateProduct;
      guardarProductos(products,res,"Producto Actualizado")
-    
+    }
+})
+
+//Eliminamos Producto
+router.delete("/api/products/:pid", async(req,res) => {
+    const productId = parseInt(req.params.pid)
+    const products = await leerProductos(0);
+    //obtenemos el producto a eliminar si existe
+    const productIndex = encontrarProducto(products,productId,res)
+    if(productIndex){
+        return
+     }else{
+        products.splice(productIndex,1)
+        guardarProductos(products,res,"Producto Eliminado")
+     }
 })
 
 module.exports = router
