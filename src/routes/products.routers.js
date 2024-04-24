@@ -48,7 +48,7 @@ function encontrarProducto(products,id,res){
 
 //Endpoints
 // Leemos todos los productos con limite si existe
-router.get("/products", async(req, res) => {
+router.get("/api/products", async(req, res) => {
     try {
         let limit = parseInt(req.query.limit);
         const products = await leerProductos(limit);
@@ -59,12 +59,11 @@ router.get("/products", async(req, res) => {
 });
 
 // producto especifico
-router.get("/products/:pid", async(req, res) => {
+router.get("/api/products/:pid", async(req, res) => {
     try {
         const productId = parseInt(req.params.pid)
         const products = await leerProductos(0);
         const product = products.find((p)=> p.id === productId) ;
-        console.log(product) 
         if(product){    
             res.json(product)
         }else{
@@ -135,4 +134,7 @@ router.delete("/api/products/:pid", async(req,res) => {
      }
 })
 
-module.exports = router
+
+
+module.exports = router;
+module.exports.leerProductos = leerProductos
