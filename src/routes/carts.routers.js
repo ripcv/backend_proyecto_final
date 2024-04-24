@@ -34,14 +34,6 @@ function guardarCarts(carts, res , msg){
     });
 }
 
-function encontrarCart(carts,id,res){
-    const cartIndex = carts.findIndex((c) => c.id === id);
-    if (cartIndex === -1) {
-        res.status(404).json({message: "Carro no encontrado"})
-        return []
-     }
-    return cartIndex
-}
 
 // Carrito especifico
 router.get("/api/carts/:cid", async(req, res) => {
@@ -73,6 +65,7 @@ router.get("/api/carts/:cid", async(req, res) => {
     }
 });
 
+//Creamos el carrito
 router.post("/api/carts", async(req,res) => {
         const newCart = req.body
         //validamos los campos el carro
@@ -91,6 +84,7 @@ router.post("/api/carts", async(req,res) => {
        
 })
 
+//Agregamos producto a carrito existente
 router.post("/api/carts/:cid/products/:pid", async(req,res) => {
     const productId = parseInt(req.params.pid)
     const cartId = parseInt(req.params.cid)
