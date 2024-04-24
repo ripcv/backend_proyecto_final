@@ -1,4 +1,5 @@
 console.log("Iniciando Proyecto")
+console.log("Primera Preentrega")
 
 const express = require('express')
 const path = require("path")
@@ -16,9 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use("/", cartsRouter)
 app.use("/", productsRouter)
 
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
-})
+
 app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`)
 }) 
