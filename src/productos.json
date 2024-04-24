@@ -1,46 +1,57 @@
 [
   {
-    "title": "producto1",
-    "description": "producto1descripcion",
-    "code": "P001",
-    "price": "15000",
-    "stock": "15",
-    "category": "Accesorios",
-    "thumbnails": "",
-    "id": 1,
-    "status": true
+      "title": "Festival Rock",
+      "description": "Las mejores Bandas del Sur del Pais",
+      "code": "EV001",
+      "price": "15000",
+      "stock": "500",
+      "category": "Conciertos",
+      "thumbnails": "/img/festival.png",
+      "id": 1,
+      "status": true
   },
   {
-    "title": "Titulo modificado papayo",
-    "description": "producto2descripcion",
-    "code": "P002",
-    "price": "15000",
-    "stock": "15",
-    "category": "Accesorios",
-    "thumbnails": "",
-    "id": 2,
-    "status": true
+      "title": "Festival Jazz",
+      "description": "Una noche llena de música Jazz",
+      "code": "EV002",
+      "price": "20000",
+      "stock": "300",
+      "category": "Conciertos",
+      "thumbnails": "/img/jazz.png",
+      "id": 2,
+      "status": true
   },
   {
-    "title": "Titulo modificado papayo",
-    "description": "producto1descripcion",
-    "code": "P001",
-    "price": "1500",
-    "stock": "23",
-    "category": "ospkdfpsf",
-    "thumbnails": "",
-    "id": 3,
-    "status": true
+      "title": "Festival de Cine",
+      "description": "Disfruta de las mejores películas del año",
+      "code": "EV003",
+      "price": "10000",
+      "stock": "400",
+      "category": "Cine",
+      "thumbnails": "/img/cine.png",
+      "id": 3,
+      "status": true
   },
   {
-    "title": "producto3",
-    "description": "producto3descripcion",
-    "code": "P003",
-    "price": "1500",
-    "stock": "23",
-    "category": "ospkdfpsf",
-    "thumbnails": "/img/03.png",
-    "id": 4,
-    "status": true
+      "title": "Feria Gastronómica",
+      "description": "Degusta la mejor comida de la región",
+      "code": "EV004",
+      "price": "5000",
+      "stock": "200",
+      "category": "Gastronomía",
+      "thumbnails": "/img/gastronomia.png",
+      "id": 4,
+      "status": true
+  },
+  {
+      "title": "Exposición de Arte",
+      "description": "Descubre las obras más destacadas de artistas locales",
+      "code": "EV005",
+      "price": "8000",
+      "stock": "100",
+      "category": "Arte",
+      "thumbnails": "/img/arte.png",
+      "id": 5,
+      "status": true
   }
 ]
