@@ -72,6 +72,7 @@ router.get("/api/carts/:cid", async(req, res) => {
         res.status(500).json({ error: error });
     }
 });
+
 router.post("/api/carts", async(req,res) => {
         const newCart = req.body
         //validamos los campos el carro
@@ -88,6 +89,26 @@ router.post("/api/carts", async(req,res) => {
             res.status(400).json({ error: 'No se puede crear un carro vacio'})
         }
        
+})
+
+router.post("/api/carts/:cid/products/:pid", async(req,res) => {
+    const productId = parseInt(req.params.pid)
+    const cartId = parseInt(req.params.cid)
+    const carts = await leerCarts();
+    const cartIndex = carts.findIndex((cart) => cart.id === cartId);
+    if(cartIndex === -1){
+        return res.status(404).json({message: "Carrito no encontrado"})
+    }
+    const productIndex = carts[cartIndex].products.findIndex(product => product.id === productId)
+
+    if(productIndex !== -1){
+        carts[cartIndex].products[productIndex].quantity += 1
+    }else{
+        carts[cartIndex].products.push({id: productId, quantity: 1})
+    }
+
+    guardarCarts(carts, res, "Carrito Actualizado")
+    
 })
 
 module.exports = router
