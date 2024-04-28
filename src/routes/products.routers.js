@@ -105,7 +105,7 @@ router.put("/api/products/:pid", async(req,res) => {
 
     //obtenemos el producto a modificar si existe
      const productIndex = encontrarProducto(products,productId,res)
-     if(productIndex){
+     if(!productIndex){
         return
      }else{
      // Filtramos que los datos vacios no sobreescriban los existentes
@@ -126,7 +126,7 @@ router.delete("/api/products/:pid", async(req,res) => {
     const products = await leerProductos(0);
     //obtenemos el producto a eliminar si existe
     const productIndex = encontrarProducto(products,productId,res)
-    if(productIndex){
+    if(!productIndex){
         return
      }else{
         products.splice(productIndex,1)
