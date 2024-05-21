@@ -1,27 +1,40 @@
 <div>
     <h1>Productos</h1>
+    <div class="categories" style="display:flex; margin_right:10px"> {{#each categories}}
+     <p style="margin-right:10px; border:1px solid black">
+        {{this}}</p>
+    {{/each}}</div>
     <table>
         <thead>
-            <th>ID</th>
             <th>Titulo</th>
             <th>Descripción</th>
             <th>Precio</th>
             <th>Thumbnail</th>
+            <th>Category</th>
             <th>Code</th>
             <th>Stock</th>
         </thead>
         <tbody>
-            {{#each products}}
+            {{#each products.docs}}
             <tr>
-            <td>{{this.id}}</td>
             <td>{{this.title}}</td>
             <td>{{this.description}}</td>
             <td>{{this.price}}</td>
             <td>{{this.thumbnail}}</td>
+            <td>{{this.category}}</td>
             <td>{{this.code}}</td>
             <td>{{this.stock}}</td>
             </tr>
             {{/each}}
         </tbody>
     </table>
+      <div class="pagination" style="text-align: center;">
+        {{#if products.hasPrevPage}}
+            <a href="/api/products?limit={{products.limit}}&page={{products.prevPage}}">Anterior</a>
+        {{/if}}
+        &nbsp;&nbsp;
+        {{#if products.hasNextPage}}
+            <a href="/api/products?limit={{products.limit}}&page={{products.nextPage}}">Siguiente</a>
+        {{/if}}
+    </div>
 </div>

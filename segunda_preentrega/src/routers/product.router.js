@@ -4,11 +4,52 @@ import productModel from "../dao/models/product.model.js";
 const router = Router();
 
 router.get('/', async(req, res) => {
-    let  limit  = parseInt(req.query.limit)
+    let  { limit = 10 , page = 1 ,sort, query } = req.query;
+    limit = parseInt(limit)
+    page = parseInt(page)
     try {
-        let products = await productModel.find().lean().limit(limit ? limit : 10);
-        console.log(products)
-        res.render('products',{products})
+        let filter = {}
+        if(query){
+            filter = {
+                $or : [
+                    { category: query},
+                    { status: query.toLowerCase()==='true'}
+                ]
+            }
+        }
+
+        let sortOptions = {}
+        if(sort){
+            sortOptions.price = sort === 'asc' ? 1 : -1
+        }
+
+        const options = {
+            lean: true,
+            page: page,
+            limit: limit,
+            sort: sortOptions
+        }
+        
+        const  products = await productModel.paginate(filter,options)
+        const categories = await productModel.distinct('category');
+        //const categories = Array.from(new Set(products.docs.map(product => product.category)));
+        
+     /*    const response = {
+            status:"success",
+            payload:products.docs,
+            categories,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            hasPrevPage:  products.hasPrevPage,
+            hasNextPage: products. hasNextPage,
+            prevLink: products.hasPrevPage ? `/api/products?limit=${limit}&page=${page - 1}&sort=${sort || ''}&query=${query || ''}` : null,
+            nextLink: products. hasNextPage ? `/api/products?limit=${limit}&page=${page + 1}&sort=${sort || ''}&query=${query || ''}` : null
+        } */
+        //res.json(response)
+ console.log(products)
+       // console.log(response.prevLink)
+        res.render('products',{products,categories})
     } catch (error) {
         console.log(error)
     }
