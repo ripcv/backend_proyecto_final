@@ -67,20 +67,21 @@ router.get("/api/carts/:cid", async(req, res) => {
 
 //Creamos el carrito
 router.post("/api/carts", async(req,res) => {
-        const newCart = req.body
-        //validamos los campos el carro
-        if(newCart.products){
-            const lastId = Math.max(...carts.map((c) => c.id),0);
-            newCart.id = lastId + 1;
-            //se agrega la cantidad que por defecto es 1 por producto
+        const newCart = req.body || {}
+        
+        const lastId = Math.max(...carts.map((c) => c.id),0);
+        newCart.id = lastId + 1;
+           
+        //si existen productos se agrega la cantidad que por defecto es 1 por producto
+        if(newCart.products) {
             newCart.products.forEach(product => {
                 product.quantity = 1;
-            });
-            carts.push(newCart)
-            guardarCarts(carts, res, "Carrito Agregado")
-        }else{
-            res.status(400).json({ error: 'No se puede crear un carro vacio'})
+            });    
         }
+              
+        carts.push(newCart)
+        guardarCarts(carts, res, "Carrito Agregado")
+       
        
 })
 
