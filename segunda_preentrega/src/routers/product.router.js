@@ -30,25 +30,13 @@ router.get('/', async(req, res) => {
             sort: sortOptions
         }
         
-        const  products = await productModel.paginate(filter,options)
+        const products = await productModel.paginate(filter,options)
         const categories = await productModel.distinct('category');
-        //const categories = Array.from(new Set(products.docs.map(product => product.category)));
-        
-     /*    const response = {
-            status:"success",
-            payload:products.docs,
-            categories,
-            totalPages: products.totalPages,
-            prevPage: products.prevPage,
-            nextPage: products.nextPage,
-            hasPrevPage:  products.hasPrevPage,
-            hasNextPage: products. hasNextPage,
-            prevLink: products.hasPrevPage ? `/api/products?limit=${limit}&page=${page - 1}&sort=${sort || ''}&query=${query || ''}` : null,
-            nextLink: products. hasNextPage ? `/api/products?limit=${limit}&page=${page + 1}&sort=${sort || ''}&query=${query || ''}` : null
-        } */
-        //res.json(response)
- console.log(products)
-       // console.log(response.prevLink)
+
+        products.sort = sort
+        products.query = query
+
+        console.log(products.sort,products.query)
         res.render('products',{products,categories})
     } catch (error) {
         console.log(error)

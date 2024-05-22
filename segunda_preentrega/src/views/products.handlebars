@@ -1,6 +1,10 @@
 <div>
     <h1>Productos</h1>
-    <div class="categories" style="display:flex; margin_right:10px"> {{#each categories}}
+
+    <h5>Categorias para Filtrar</h5>
+    <div class="categories" style="display:flex; margin_right:10px"> 
+        
+        {{#each categories}}
      <p style="margin-right:10px; border:1px solid black">
         {{this}}</p>
     {{/each}}</div>
@@ -30,11 +34,11 @@
     </table>
       <div class="pagination" style="text-align: center;">
         {{#if products.hasPrevPage}}
-            <a href="/api/products?limit={{products.limit}}&page={{products.prevPage}}">Anterior</a>
+            <a href="/api/products?limit={{products.limit}}&page={{products.prevPage}}{{#if products.sort}}&sort={{products.sort}}{{/if}}{{#if products.query}}&query={{products.query}}{{/if}}">Anterior</a>
         {{/if}}
         &nbsp;&nbsp;
         {{#if products.hasNextPage}}
-            <a href="/api/products?limit={{products.limit}}&page={{products.nextPage}}">Siguiente</a>
+            <a href="/api/products?limit={{products.limit}}&page={{products.nextPage}}{{#if products.sort}}&sort={{products.sort}}{{/if}}{{#if products.query}}&query={{products.query}}{{/if}}">Siguiente</a>
         {{/if}}
     </div>
 </div>
