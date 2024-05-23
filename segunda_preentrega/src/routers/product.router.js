@@ -33,11 +33,21 @@ router.get('/', async(req, res) => {
         const products = await productModel.paginate(filter,options)
         const categories = await productModel.distinct('category');
 
-        products.sort = sort
-        products.query = query
+        //se crea variable result solicitada en la consigna
+        const results = {
+            status: "success0",
+            payload: products.docs,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: `/api/products?limit=${products.limit}&page=${products.prevPage}${sort ? `&sort=${sort}`: ""}${query ? `&query=${query}` : ""}`,
+            nextLink: `/api/products?limit=${products.limit}&page=${products.nextPage}${sort ? `&sort=${sort}`: ""}${query ? `&query=${query}` : ""}`
+        }
 
-        console.log(products.sort,products.query)
-        res.render('products',{products,categories})
+
+        res.render('products',{results,categories})
     } catch (error) {
         console.log(error)
     }

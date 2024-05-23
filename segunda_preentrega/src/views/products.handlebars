@@ -3,10 +3,13 @@
 
     <h5>Categorias para Filtrar</h5>
     <div class="categories" style="display:flex; margin_right:10px"> 
-        
+        <p style="margin-right:10px; border:1px solid black">
+            <a href="/api/products">Todas</a>
+        </p>
         {{#each categories}}
      <p style="margin-right:10px; border:1px solid black">
-        {{this}}</p>
+        <a href="/api/products?query={{this}}">{{this}}</a>
+        </p>
     {{/each}}</div>
     <table>
         <thead>
@@ -17,9 +20,10 @@
             <th>Category</th>
             <th>Code</th>
             <th>Stock</th>
+            <th>Accion</th>
         </thead>
         <tbody>
-            {{#each products.docs}}
+            {{#each results.payload}}
             <tr>
             <td>{{this.title}}</td>
             <td>{{this.description}}</td>
@@ -28,17 +32,32 @@
             <td>{{this.category}}</td>
             <td>{{this.code}}</td>
             <td>{{this.stock}}</td>
+            <td><button class="add-to-cart" data-id="{{this.id}}">Comprar Ticket</button></td>
             </tr>
             {{/each}}
         </tbody>
     </table>
       <div class="pagination" style="text-align: center;">
-        {{#if products.hasPrevPage}}
-            <a href="/api/products?limit={{products.limit}}&page={{products.prevPage}}{{#if products.sort}}&sort={{products.sort}}{{/if}}{{#if products.query}}&query={{products.query}}{{/if}}">Anterior</a>
+        {{#if results.hasPrevPage}}
+            <a href="{{results.prevLink}}">Anterior</a>
         {{/if}}
         &nbsp;&nbsp;
-        {{#if products.hasNextPage}}
-            <a href="/api/products?limit={{products.limit}}&page={{products.nextPage}}{{#if products.sort}}&sort={{products.sort}}{{/if}}{{#if products.query}}&query={{products.query}}{{/if}}">Siguiente</a>
+        {{#if results.hasNextPage}}
+            <a href="{{results.nextLink}}">Siguiente</a>
         {{/if}}
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.add-to-cart');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('data-id');
+            console.log(productId)
+        });
+    });
+});
+
+</script>
