@@ -1,27 +1,21 @@
 <div>
-    <h1>Productos</h1>
+    <h1>Carrito<span> {{cid}}</span></h1>
+    
     <table>
         <thead>
-            <th>ID</th>
-            <th>Titulo</th>
-            <th>Descripción</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
             <th>Precio</th>
-            <th>Thumbnail</th>
-            <th>Code</th>
-            <th>Stock</th>
         </thead>
         <tbody>
-            {{#each products}}
+            {{#each cart.products}}
             <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.title}}</td>
-            <td>{{this.description}}</td>
-            <td>{{this.price}}</td>
-            <td>{{this.thumbnail}}</td>
-            <td>{{this.code}}</td>
-            <td>{{this.stock}}</td>
-            </tr>
+            <td>{{this.product.title}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.product.price}}</td>
             {{/each}}
+            
         </tbody>
+        <th>Total <td>{{cart.total}}</td></tr></td>
     </table>
 </div>
