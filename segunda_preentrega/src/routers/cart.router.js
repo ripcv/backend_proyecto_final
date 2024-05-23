@@ -6,7 +6,10 @@ const router = Router();
 router.get('/', async(req, res) => {
     try {
         let carts =  await cartModel.find()
-        res.send({ result: "success" , payload: carts})
+        if (carts){
+            res.send({ result: "success" , payload: carts})
+        }
+        res.send({result: "No Existen Carritos aun"})
     } catch (error) {
         console.log(error)
     }
@@ -23,11 +26,8 @@ router.get('/:cid', async(req, res) => {
 })
 
 router.post('/', async(req, res)=> {
-    let {user, products} = req.body
-    if(!user || !products){
-        res.send({ status: "error", error: "Faltan parametros"})
-    }
-    let result = await cartModel.create({user, products})
+    let {products = [], total} = req.body
+    let result = await cartModel.create({products,total})
     res.send({ result: "success", payload: result })
 })
 
