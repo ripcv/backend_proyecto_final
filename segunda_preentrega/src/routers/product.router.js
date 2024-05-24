@@ -59,7 +59,7 @@ router.get('/:pid', async(req, res) => {
         let product = await productModel.findOne({_id:pid})
         res.send({ result: "success" , payload: product})
     } catch (error) {
-        console.log(error)
+        res.send({status: "error", error: "Producto no encontrado"})
     }
 })
 

@@ -32,7 +32,9 @@
             <td>{{this.category}}</td>
             <td>{{this.code}}</td>
             <td>{{this.stock}}</td>
-            <td><button class="add-to-cart" data-id="{{this.id}}">Comprar Ticket</button></td>
+            <td><form action="/api/carts/" method="POST">
+  <button type="submit" class="add-to-cart" data-id="{{id}}">Agregar al carrito</button>
+  <input type="hidden" name="product" value="{{id}}"> </form></td>
             </tr>
             {{/each}}
         </tbody>
@@ -47,17 +49,3 @@
         {{/if}}
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.add-to-cart');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            const productId = button.getAttribute('data-id');
-            console.log(productId)
-        });
-    });
-});
-
-</script>
