@@ -5,7 +5,7 @@ import handlebars from 'express-handlebars'
 import productRouters from './routers/product.router.js'
 import cartRouters from './routers/cart.router.js'
 //import socketController from './socketController.js'
-import { Server } from 'socket.io'
+//import { Server } from 'socket.io'
 import dotenv from 'dotenv'
 dotenv.config()
 console.log("Segunda Preentrega Proyecto Final")
@@ -14,7 +14,7 @@ const app = express()
 const PORT = 8080
 const httpServer = app.listen(PORT, console.log(`Server running on port ${PORT}`))
 
-const socketServer = new Server(httpServer)
+//const socketServer = new Server(httpServer)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -28,7 +28,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static(__dirname + '/public'))
 
 app.use('/api/products', productRouters)
-app.use('/api/carts', cartRouters)
+app.use('/api/carts/', cartRouters)
 
 //socketServer.on('connection', socketController)
 
