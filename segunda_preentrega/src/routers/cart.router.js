@@ -139,9 +139,50 @@ router.put('/:cid/products/:pid', async (req, res) => {
 //Elimina el contenido del carrito seleccionado
 router.delete('/:cid/', async(req, res) => {
     let { cid } = req.params
-    console.log(cid)
     let result = await cartModel.findByIdAndUpdate({ _id: cid },{products:[],total:0},{new: true})
     res.send({ result: "success", payload: result })
+})
+
+//Elimina el contenido del carrito seleccionado
+router.delete('/:cid/products/:pid', async(req, res) => {
+    let { cid , pid} = req.params
+    try {
+        const cartExist = await cartModel.findById({_id:cid});
+        if(!cartExist){
+            return res.status(400).send({ status: 'error', error: `Carrito con ID ${cid} no encontrado` });
+        }
+        
+        const productInCart = await cartModel.findOne({ _id: cid, 'products.product': pid });
+        if (!productInCart) {
+            return res.status(404).send({ status: 'error', error: `Producto con ID ${pid} no encontrado en el carrito` });
+        }
+        const updateCart = await cartModel.findOneAndUpdate(
+            {_id: cid},
+            {$pull:{products: {product:pid}}},
+            {new:true}
+        )
+       
+        // Calculamos nuevamente el total
+        const findCart = await cartModel.findOne({ _id: cid }).populate({
+            path: 'products.product',
+            select: 'price'
+        });
+
+        let total = 0;
+        findCart.products.forEach(product => {
+            total += product.product.price * product.quantity;
+        });
+
+        const updatedCartWithTotal = await cartModel.findByIdAndUpdate(
+            cid,
+            { $set: { total } },
+            { new: true }
+        );
+
+        res.send({ result: 'success', payload: updatedCartWithTotal });
+    } catch (error) {
+        
+    }
 })
 
 
