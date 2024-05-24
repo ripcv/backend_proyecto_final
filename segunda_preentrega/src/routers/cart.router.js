@@ -77,37 +77,50 @@ router.post('/', async (req, res) => {
 
 router.put('/:cid/products/:pid', async (req, res) => {
     const { cid, pid } = req.params; 
-    const quantity = req.body.quantity; 
+    let quantity = req.body.quantity; 
   
     if (!quantity || typeof quantity !== 'number' || quantity <= 0) {
-      return res.status(400).send({ status: 'error', error: 'Ingrese una cantidad valida' });
+      quantity = 1
     }
-    //Actualizamos la cantidad del producto
+    
     try {
-      const updatedCart = await cartModel.findOneAndUpdate(
-        { _id: cid }, 
-        { $set: { 'products.$[product].quantity': quantity } },
-        { new: true, arrayFilters: [{ 'product.product': pid }] } 
-      );
-  
-      if (!updatedCart) {
-        return res.status(400).send({ status: 'error', error: `Carrito con ID ${cid} no encontrado o producto con ID ${pid} no existe en el carrito` });
+        //Verificamos si el carrito existe.
+        const cartExist = await cartModel.findById({_id:cid});
+        if(!cartExist){
+            return res.status(400).send({ status: 'error', error: `Carrito con ID ${cid} no encontrado` });
+        }
+
+      //verificamos si el producto esta en el carrito
+      const productInCart = await cartModel.findOne({ _id: cid, 'products.product': pid });
+      if(productInCart){
+        //Si existe se actualiza la cantidad
+        const updatedCart = await cartModel.findOneAndUpdate(
+            { _id: cid }, 
+            { $set: { 'products.$[product].quantity': quantity } },
+            { new: true, arrayFilters: [{ 'product.product': pid }] } 
+          );
+      }else{
+        // Si no existe se agrega
+        const updatedCart = await cartModel.findOneAndUpdate(
+            { _id: cid }, 
+            { $push: { products: {product:pid, quantity } }},
+            { new: true } 
+          );
       }
-      //Ahora actualizamos el total
+
+      //se actualiza el total del carrito
         let findCart = await cartModel.findOne({_id:cid}).populate({
         path:'products.product',
         select:'price'
     }) 
-     let updateTotal = 0
+    let updateTotal = 0
     let currentTotal = 0
     let total = 0
     findCart.products.forEach(product => {
         if(product.product.id===pid){
             updateTotal = product.product.price * product.quantity
-            console.log(updateTotal)
         }else{
             currentTotal = product.product.price * product.quantity
-            console.log(currentTotal)
         }
         total = updateTotal + currentTotal
     });
@@ -119,7 +132,6 @@ router.put('/:cid/products/:pid', async (req, res) => {
 
       res.send({ result: 'success', payload: updatedCartWithTotal });
     } catch (error) {
-      console.error(error);
       res.status(500).send({ status: 'error', error: 'Error actualizando el carrito' });
     }
   });
