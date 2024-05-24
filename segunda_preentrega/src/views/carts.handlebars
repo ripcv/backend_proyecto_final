@@ -1,8 +1,9 @@
 <div>
-    <h1>Carrito<span> {{cid}}</span></h1>
+    <h1>Carrito ID:<span> {{cid}}</span></h1>
     
-    <table>
+    <table class="table_display">
         <thead>
+            <th>ID</th>
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Precio</th>
@@ -10,12 +11,13 @@
         <tbody>
             {{#each cart.products}}
             <tr>
+            <td>{{this.product._id}}</td>
             <td>{{this.product.title}}</td>
             <td>{{this.quantity}}</td>
             <td>{{this.product.price}}</td>
             {{/each}}
             
         </tbody>
-        <th>Total <td>{{cart.total}}</td></tr></td>
+        <th>Total <td></td> <td></td><th>{{cart.total}}</th>
     </table>
 </div>
