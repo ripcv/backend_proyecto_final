@@ -89,18 +89,18 @@ Aplicación para la venta online de tickets para distintos eventos
 #### Create a Cart
 
 ```http
-  POST /api/carts/
+  POST /api/carts/${:pid}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `productId`      | `number` | **Required**.ID of Product to add |
+| `productId`      | `number` | ID of Product to add (optional) |
 
 
-#### Add product to existent Cart
+#### Add o Update product to existent Cart
 
 ```http
-  POST /api/carts/${cid}/products/${pid}
+  PUT /api/carts/${cid}/products/${pid}
 ```
 
 | Parameter | Type     | Description                       |
@@ -108,6 +108,40 @@ Aplicación para la venta online de tickets para distintos eventos
 | `cid`      | `number` | **Required**. ID of cart |
 | `pid`      | `number` | **Required**. ID of Product to add |
 
+If body is empty quantity is 1.
+
+```json
+{
+    "quantity":2
+}
+```
+
+
+
+#### Empty Carts
+
+```http
+  DELETE /api/carts/${cid}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `cid`      | `number` | **Required**. ID of cart |
+
+Delete all products from cart
+
+#### Empty Carts
+
+```http
+  DELETE /api/carts/${cid}/products/${:pid}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `cid`      | `number` | **Required**. ID of cart |
+| `pid`      | `number` | **Required**. ID of Product|
+
+Delete specific  products from cart
 
 
 ## Authors
