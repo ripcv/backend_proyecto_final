@@ -17,7 +17,7 @@ router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profile', { user: req.session.user, pageProfile : "true"});
 });
 
- router.get('/api/product/create',isAdmin,renderProductForm)
+router.get('/api/product/create',isAdmin,renderProductForm)
 router.get('/api/product/edit/:pid', isAdmin, renderProductForm)
 
 export default router;

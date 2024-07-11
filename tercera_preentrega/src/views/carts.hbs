@@ -57,19 +57,7 @@
             }
 
             const result = await response.json();
-           
-            if (result.success) {
-                // Mostrar una alerta de éxito
-                Swal.fire({
-                    title: 'Éxito',
-                    text: 'Compra procesada exitosamente',
-                    icon: 'success'
-
-                }).then(() => {
-                    window.location.href = `/api/carts/${cartId}`;
-                });
-            } else {
-                let mensaje = " "
+            let mensaje = " "
                 if(!result.products){
                     mensaje = "El carrito esta vacio, favor agregar productos"
                 }else{
@@ -77,7 +65,18 @@
                     mensaje = products.join('<br>') 
                     mensaje+= "<br> sin Stock suficiente."
                 }
-                
+
+            if (result.success) {
+                // Mostrar una alerta de éxito
+                Swal.fire({
+                    title: 'Éxito',
+                    html: `Compra procesada exitosamente.<br>${mensaje}`,
+                    icon: 'success'
+
+                }).then(() => {
+                    window.location.href = `/api/carts/${cartId}`;
+                });
+            } else {
                 Swal.fire({
                     title: 'Error',
                     html: `Error al procesar la compra.<br>${mensaje}`,

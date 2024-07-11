@@ -1,5 +1,6 @@
 import * as CartServices from '../services/cartsService.js'
 import * as ProductServices from '../services/productsService.js'
+import { sendMail } from '../utils.js'
 
 export async function getAllCarts(req, res) {
     try {
@@ -135,8 +136,9 @@ export async function purchaseCart(req, res) {
         }
         //Generamos el Ticket
         const result = await CartServices.generateTicket(cartId, total, req.session.user.email)
-
-        return res.status(200).json({ success: true, message: 'Compra procesada exitosamente', ticket: result });
+        //Generamos el Correo
+        await sendMail(req.session.user.email,result)
+        return res.status(200).json({ success: true, message: 'Compra procesada exitosamente', ticket: result , products: infoPurchase.outStock});
 
     }
 

@@ -3,6 +3,7 @@ import { dirname } from 'path'
 import bcrypt from 'bcryptjs'
 import cartModel from './dao/models/cart.model.js'
 import userModel from './dao/models/users.model.js'
+import nodemailer from 'nodemailer'
 const __filename = fileURLToPath(import.meta.url)
 
 
@@ -31,9 +32,35 @@ export const addCartToUser = async (userId) => {
 
 }
 
-export const codeTicketGenerator = async(cartId)=>{
+export const codeTicketGenerator = async (cartId) => {
     const lastFourDigits = cartId.toString().slice(-2);
     const currentDate = new Date();
     const formattedTime = currentDate.toTimeString().slice(0, 8).replace(/:/g, '');
     return `CP${lastFourDigits}${formattedTime}`
+}
+
+const transport = nodemailer.createTransport({
+    service: "gmail",
+    port: 587,
+    auth: {
+        user: "gefallene.engel@gmail.com",
+        pass: "uyov bbir zwgf ddar"
+    }
+})
+
+
+export async function sendMail(email, ticket) {
+
+    let result = await transport.sendMail({
+        from: "Compra Exitosa <gefallene.engel@gmail.com>",
+        to: email,
+        subject: `Orden ${ticket.code}`,
+        html: `
+    <div>
+     <h1>Orden completada</h1>
+     <p> Se realizo una compra por: ${ticket.amount} </p>
+    </div>
+    `,
+    })
+
 }
