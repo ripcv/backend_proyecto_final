@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
+
+
 const ticketCollection = "Ticket"
 
 const ticketSchema = new mongoose.Schema({
-    code: { type: String, unique: true },
+    code: { type: String, unique: true , require: true},
     purchase_datetime: {type : Date, default: Date.now},
-    amount: Number,
+    amount: {type: Number, required: true},
     purchaser: String,
 });
 
