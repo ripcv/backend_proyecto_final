@@ -2,6 +2,7 @@ import userModel from "../dao/models/users.model.js";
 import { isValidPassword } from "../utils.js";
 import UserDto from "../dto/user.dto.js";
 import UserRepository from "../repositories/user.repositories.js";
+import { addCartToUser } from "../utils.js";
 
 const userRepository = new UserRepository(userModel)
 
@@ -37,6 +38,8 @@ export async function findUser(username, password) {
             user.role,
             user.cartId ? user.cartId._id: null
         )
+        const newCartId = await addCartToUser(user._id)
+        if(newCartId) userDTO.cartId = newCartId
         return userDTO
 
     } catch (error) {

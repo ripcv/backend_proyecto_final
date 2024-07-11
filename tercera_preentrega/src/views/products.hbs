@@ -69,7 +69,6 @@
     </div>
 </div>
 {{msg}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -116,24 +115,4 @@
         });
     });
 
-    document.querySelectorAll('.edit-product').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            const productId = event.target.dataset.id;
-            try {
-                const response = await fetch(`/api/products/${productId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ /* datos que deseas enviar */ })
-                });
-                if (!response.ok) {
-                    throw new Error('Error al editar el producto');
-                }
-                // Manejar la respuesta según sea necesario
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
 </script>

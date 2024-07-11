@@ -23,9 +23,17 @@ export const addCartToUser = async (userId) => {
             updateUser.cartId = newCart._id;
             await updateUser.save();
         }
+        return updateUser.cartId
     } catch (error) {
         console.error('Error al agregar el carrito al usuario:', err);
         throw err;
     }
 
+}
+
+export const codeTicketGenerator = async(cartId)=>{
+    const lastFourDigits = cartId.toString().slice(-2);
+    const currentDate = new Date();
+    const formattedTime = currentDate.toTimeString().slice(0, 8).replace(/:/g, '');
+    return `CP${lastFourDigits}${formattedTime}`
 }

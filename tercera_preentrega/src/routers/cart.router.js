@@ -10,6 +10,8 @@ router.get('/:cid', isAuthenticated, CartsController.getCartByIdToRender)
 
 router.post('/', CartsController.addProducts);
 
+router.post('/:cid/purchase',isAuthenticated, CartsController.purchaseCart)
+
 //El Put esta con problemas, se debe corregir su funcionamiento.
 router.put('/:cid/products/:pid', CartsController.updateCartContent);
 

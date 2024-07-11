@@ -1,4 +1,5 @@
 import * as CartServices from '../services/cartsService.js'
+import * as ProductServices from '../services/productsService.js'
 
 export async function getAllCarts(req, res) {
     try {
@@ -14,7 +15,7 @@ export async function getAllCarts(req, res) {
 export async function getCartByIdToRender(req, res) {
     let { cid } = req.params
     try {
-        const cart = await CartServices.getCartByIdToRender(cid)
+        const cart = await CartServices.getCartById(cid)
         if (!cart) return false
         res.render('carts', {
             cart, cid, user: req.session.user,
@@ -107,18 +108,38 @@ export async function deleteCartContent(req, res) {
 export async function deleteCartProduct(req, res) {
     let { cid, pid } = req.params
     try {
-        //buscamos el carrito
-        const cartExist = await CartServices.getCartById(cid)
-        if (!cartExist) {
-            return res.status(400).send({ status: 'error', error: `Carrito con ID ${cid} no encontrado` });
-        }
-        //actualizamos el carrito
-        const updateCart = await CartServices.updateCart(cid, pid)
-        // Calculamos nuevamente el total
-        const updatedCartWithTotal = await CartServices.cartTotalCalc(cid)
-
-        res.send({ result: 'success', payload: updatedCartWithTotal });
+        const updateCart = await CartServices.deleteCartProduct(cid, pid)
+        res.send({ result: 'success', payload: updateCart });
     } catch (error) {
         res.send({ status: "error", error: "Error eliminando el producto" });
     }
+}
+
+
+export async function purchaseCart(req, res) {
+    const { cartId } = req.body
+    const cart = await CartServices.getCartById(cartId)
+    if (cart.products.length === 0) return  res.status(200).json({ error: true, message: 'Carrito Vacio'});
+    //validamos el stock y lo descontamos del producto    
+    const infoPurchase = await CartServices.stockCheck(cart)
+    let total = 0
+    if (infoPurchase.inStock != "") {
+        for (const purchase of infoPurchase.inStock) {
+            const productId = purchase.product._id
+            const productUpdate = {
+                stock: purchase.stock - purchase.quantity
+            }
+            await ProductServices.updateProduct(productId, productUpdate)
+            total += parseInt(purchase.product.price * purchase.quantity)
+            await CartServices.deleteCartProduct(cartId, productId)
+        }
+        //Generamos el Ticket
+        const result = await CartServices.generateTicket(cartId, total, req.session.user.email)
+
+        return res.status(200).json({ success: true, message: 'Compra procesada exitosamente', ticket: result });
+
+    }
+
+    return res.status(200).json({ error: true, message: 'Compra No procesada ', products: infoPurchase.outStock});
+
 }

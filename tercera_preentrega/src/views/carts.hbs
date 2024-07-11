@@ -1,13 +1,14 @@
-
 {{> userinfo}}
 <div class="cartContent">
     <h1>Carrito ID:<span> {{cid}}</span></h1>
     <table class="table_display">
         <thead>
-            <th>ID</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+            </tr>
         </thead>
         <tbody>
             {{#each cart.products}}
@@ -16,12 +17,76 @@
                 <td>{{this.product.title}}</td>
                 <td>{{this.quantity}}</td>
                 <td>{{this.product.price}}</td>
-                {{/each}}
-
+            </tr>
+            {{/each}}
         </tbody>
-        <th>Total
-        <td></td>
-        <td></td>
-        <th>{{cart.total}}</th>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <td></td>
+                <td></td>
+                <th>{{cart.total}}</th>
+            </tr>
+        </tfoot>
     </table>
+    <form id="purchaseForm" action="/api/carts/{{cid}}/purchase" method="POST">
+        <input type="hidden" name="cartId" value="{{cid}}">
+        <button type="submit">Procesar Compra</button>
+    </form>
 </div>
+
+
+<script>
+    document.getElementById('purchaseForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const form = event.target;
+        const cartId = form.cartId.value;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cartId })
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al procesar la compra');
+            }
+
+            const result = await response.json();
+           
+            if (result.success) {
+                // Mostrar una alerta de éxito
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'Compra procesada exitosamente',
+                    icon: 'success'
+
+                }).then(() => {
+                    window.location.href = `/api/carts/${cartId}`;
+                });
+            } else {
+                let mensaje = " "
+                if(!result.products){
+                    mensaje = "El carrito esta vacio, favor agregar productos"
+                }else{
+                    const products = result.products
+                    mensaje = products.join('<br>') 
+                    mensaje+= "<br> sin Stock suficiente."
+                }
+                
+                Swal.fire({
+                    title: 'Error',
+                    html: `Error al procesar la compra.<br>${mensaje}`,
+                    icon: 'error'
+                });
+            }
+        } catch (error) {
+            console.log(error)
+
+        }
+    });
+</script>

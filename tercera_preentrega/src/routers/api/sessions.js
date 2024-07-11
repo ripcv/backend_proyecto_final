@@ -1,7 +1,5 @@
 import { Router } from 'express';
 import passport from 'passport'
-import { addCartToUser } from '../../utils.js';
-//import UsersControllers from '../../controllers/usersControllers.js';
 
 const router = Router();
 
@@ -17,9 +15,6 @@ router.post('/failregister', (req, res) => {
 router.post('/login', passport.authenticate('login', { failureRedirect: 'faillogin' }), async (req, res) => {
     if (!req.user) return res.status(400).send({ status: "error", error: "Datos incompletos" })
     try {
-
-        await addCartToUser(req.user._id)
-
         req.session.user = {
             first_name: req.user.first_name,
             last_name: req.user.last_name,

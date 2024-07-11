@@ -11,6 +11,7 @@ export async function getAllProducts(req, res) {
         products.payload.forEach(product => {
             product.isAdmin = isAdmin
         });
+        
         return res.render('products', {
             products: products,
             user: req.session.user,
@@ -34,7 +35,6 @@ export async function getProductById(req, res) {
 }
 
 export async function renderProductForm (req,res){
-    console.log("Aqui en render")
     const pid = req.params.pid; 
     let product = null;
     if (pid) {
@@ -66,7 +66,6 @@ export async function createProduct(req, res) {
 }
 
 export async function updateProduct(req, res) {
-    console.log("entrando en el update")
         let { pid } = req.params
         let productToReplace = req.body
         if (!productToReplace || Object.keys(productToReplace).length === 0) {

@@ -41,6 +41,7 @@ const initializePassport = () => {
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
        try {
             const user = await UsersControllers.findUser(username, password)
+            
             return done(null, user)
         } catch (error) {
             return done(error)
