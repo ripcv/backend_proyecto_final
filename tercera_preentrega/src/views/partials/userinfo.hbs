@@ -1,0 +1,31 @@
+<div class="userInfo">
+    <div class="user">
+        <p>Bienvenido {{user.first_name}}&nbsp;{{user.last_name}}</p>
+        {{#if user.email}}
+        <p>email: {{user.email}} </p>
+        {{else}}
+        <p>Login From GitHub</p>
+        {{/if}}
+        <p>role: {{user.role}}</p>
+    </div>
+    <div class="botones">
+        {{#unless pageCart}}
+        <div><a href="/api/carts/{{user.cartId}}"><button>Ver carrito</button></a></div>
+        {{/unless}}
+        {{#unless pageProducts}}
+        <div>
+            <a href="/api/products"><button>Productos</button></a>
+        </div>
+        {{/unless}}
+        {{#unless pageProfile}}
+        <div>
+            <a href="/profile"><button>Perfil</button></a>
+        </div>
+        {{/unless}}
+        <div class="logout">
+            <form action="/api/sessions/logout" method="POST">
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </div>
+</div>

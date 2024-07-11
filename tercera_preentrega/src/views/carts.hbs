@@ -1,0 +1,27 @@
+
+{{> userinfo}}
+<div class="cartContent">
+    <h1>Carrito ID:<span> {{cid}}</span></h1>
+    <table class="table_display">
+        <thead>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+        </thead>
+        <tbody>
+            {{#each cart.products}}
+            <tr>
+                <td>{{this.product._id}}</td>
+                <td>{{this.product.title}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.product.price}}</td>
+                {{/each}}
+
+        </tbody>
+        <th>Total
+        <td></td>
+        <td></td>
+        <th>{{cart.total}}</th>
+    </table>
+</div>

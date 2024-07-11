@@ -1,0 +1,139 @@
+<div>
+    <h1>Productos</h1>
+    {{> userinfo}}
+    <h5>Categorias para Filtrar</h5>
+    <div class="categories">
+        <p>
+            <a href="/api/products">Todas</a>
+        </p>
+        {{#each products.categories}}
+        <p>
+            <a href="/api/products?query={{this}}">{{this}}</a>
+        </p>
+        {{/each}}
+    </div>
+    {{#if isAdmin}}
+    <div>
+        <a href="/api/product/create" class="createProduct">
+            <button>Agregar Producto</button>
+        </a>
+    </div>
+    {{/if}}
+    <table class="table_display">
+        <thead>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            {{!-- <th>Thumbnail</th> --}}
+            <th>Category</th>
+            <th>Code</th>
+            <th>Stock</th>
+            <th>Accion</th>
+        </thead>
+        <tbody>
+            {{#each products.payload}}
+            <tr>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                {{!-- <td>{{this.thumbnail}}</td> --}}
+                <td>{{this.category}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.stock}}</td>
+                <td>
+                    <form action="/api/carts/" method="POST">
+                        <button type="submit" class="add-to-cart" data-id="{{id}}">Agregar al carrito</button>
+                        <input type="hidden" name="product" value="{{id}}">
+                    </form>
+
+                    {{#if isAdmin}}
+                    <a href="/api/product/edit/{{id}}">
+                        <button class="edit-product" data-id="{{id}}">Edit</button>
+                    </a>
+                    <button class="delete-product" data-id="{{id}}">Delete</button>
+                    {{/if}}
+
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div class="pagination" style="text-align: center;">
+        {{#if products.hasPrevPage}}
+        <a href="{{products.prevLink}}">Anterior</a>
+        {{/if}}
+        &nbsp;&nbsp;
+        {{#if products.hasNextPage}}
+        <a href="{{products.nextLink}}">Siguiente</a>
+        {{/if}}
+    </div>
+</div>
+{{msg}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const successMessage = '{{msg}}';
+        if (successMessage) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto agregado correctamente",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = '/api/products';
+            });
+        }
+    });
+</script>
+
+<script>
+    document.querySelectorAll('.delete-product').forEach(button => {
+        button.addEventListener('click', async (event) => {
+            const productId = event.target.dataset.id;
+            try {
+                const response = await fetch(`/api/products/${productId}`, {
+                    method: 'DELETE'
+                });
+                if (!response.ok) {
+                    throw new Error('Error al eliminar el producto');
+                }
+
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Producto eliminado correctamente",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = '/api/products';
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    document.querySelectorAll('.edit-product').forEach(button => {
+        button.addEventListener('click', async (event) => {
+            const productId = event.target.dataset.id;
+            try {
+                const response = await fetch(`/api/products/${productId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ /* datos que deseas enviar */ })
+                });
+                if (!response.ok) {
+                    throw new Error('Error al editar el producto');
+                }
+                // Manejar la respuesta según sea necesario
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
