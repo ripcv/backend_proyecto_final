@@ -1,72 +1,68 @@
+<h1>{{#if product}}Editar Producto{{else}}Crear Producto{{/if}}</h1>
+<form id="productForm">
+  <label for="title">Título:</label>
+  <input
+    type="text"
+    id="title"
+    name="title"
+    value="{{product.title}}"
+    required
+  />
 
+  <label for="description">Descripción:</label>
+  <input
+    type="text"
+    id="description"
+    name="description"
+    value="{{product.description}}"
+    required
+  />
 
-   <h1>{{#if product}}Editar Producto{{else}}Crear Producto{{/if}}</h1>
-    <form id="productForm">
-        <label for="title">Título:</label>
-        <input type="text" id="title" name="title" value="{{product.title}}" required>
-        
-        <label for="description">Descripción:</label>
-        <input type="text" id="description" name="description" value="{{product.description}}" required>
-        
-        <label for="price">Precio:</label>
-        <input type="number" id="price" name="price" value="{{product.price}}" required>
-        
-        <label for="category">Categoría:</label>
-        <input type="text" id="category" name="category" value="{{product.category}}" required>
-        
-        <label for="code">Código:</label>
-        <input type="text" id="code" name="code" value="{{product.code}}" required>
-        
-        <label for="stock">Stock:</label>
-        <input type="number" id="stock" name="stock" value="{{product.stock}}" required>
-        
-        <button type="submit">{{#if product}}Guardar Cambios{{else}}Crear Producto{{/if}}</button>
-    </form>
+  <label for="price">Precio:</label>
+  <input
+    type="number"
+    id="price"
+    name="price"
+    value="{{product.price}}"
+    required
+  />
 
+  <label for="category">Categoría:</label>
+  <input
+    type="text"
+    id="category"
+    name="category"
+    value="{{product.category}}"
+    required
+  />
 
+  <label for="code">Código:</label>
+  <input type="text" id="code" name="code" value="{{product.code}}" required />
 
+  <label for="stock">Stock:</label>
+  <input
+    type="number"
+    id="stock"
+    name="stock"
+    value="{{product.stock}}"
+    required
+  />
 
-  <script>
-        document.getElementById('productForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
-            const productId = "{{product._id}}"; 
+  <button type="submit">{{#if product}}Guardar Cambios{{else}}Crear Producto{{/if}}</button>
+</form>
 
-            const url = productId ? `/api/products/${productId}` : '/api/products';
-            const method = productId ? 'PUT' : 'POST';
-
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-
-                const result = await response.json();
-                if(!result){
-                    
-                }
-                 Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Producto actualizado correctamente",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.location.href = '/api/products';
-                });
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al realizar la operación');
-            }
-        });
-    </script>
+<script>
+  document.getElementById('productForm').addEventListener('submit', async
+  (event) => { event.preventDefault(); const form = event.target; const formData
+  = new FormData(form); const data = Object.fromEntries(formData); const
+  productId = "{{product._id}}"; const url = productId ?
+  `/api/products/${productId}` : '/api/products'; const method = productId ?
+  'PUT' : 'POST'; try { const response = await fetch(url, { method: method,
+  headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
+  }); if (!response.ok) { throw new Error('Error en la solicitud'); } const
+  result = await response.json(); if(!result){ } Swal.fire({ position:
+  "top-end", icon: "success", title: "Producto actualizado correctamente",
+  showConfirmButton: false, timer: 1500 }).then(() => { window.location.href =
+  '/api/products'; }); } catch (error) { console.error('Error:', error);
+  alert('Error al realizar la operación'); } });
+</script>

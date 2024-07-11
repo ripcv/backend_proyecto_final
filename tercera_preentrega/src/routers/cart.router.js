@@ -1,25 +1,24 @@
 import { Router } from "express";
 import { isAuthenticated } from "../middleware/auth.js";
-import * as CartsController from '../controllers/cartControllers.js'
+import * as CartsController from "../controllers/cartControllers.js";
 
 const router = Router();
 
-router.get('/', CartsController.getAllCarts)
+router.get("/", CartsController.getAllCarts);
 
-router.get('/:cid', isAuthenticated, CartsController.getCartByIdToRender)
+router.get("/:cid", isAuthenticated, CartsController.getCartByIdToRender);
 
-router.post('/', CartsController.addProducts);
+router.post("/", CartsController.addProducts);
 
-router.post('/:cid/purchase',isAuthenticated, CartsController.purchaseCart)
+router.post("/:cid/purchase", isAuthenticated, CartsController.purchaseCart);
 
 //El Put esta con problemas, se debe corregir su funcionamiento.
-router.put('/:cid/products/:pid', CartsController.updateCartContent);
+router.put("/:cid/products/:pid", CartsController.updateCartContent);
 
 //Elimina el contenido del carrito seleccionado
-router.delete('/:cid/', CartsController.deleteCartContent)
+router.delete("/:cid/", CartsController.deleteCartContent);
 
 //Elimina producto del carrito seleccionado
-router.delete('/:cid/products/:pid', CartsController.deleteCartProduct)
+router.delete("/:cid/products/:pid", CartsController.deleteCartProduct);
 
-
-export default router
+export default router;
