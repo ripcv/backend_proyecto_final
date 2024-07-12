@@ -47,7 +47,6 @@ export async function addProducts(cartId, products) {
       { $addToSet: { products: [] } },
       { new: true },
     );
-
     if (!cart) {
       throw new Error(`Cart with ID ${cartId} not found`);
     }
