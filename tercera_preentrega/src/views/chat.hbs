@@ -1,6 +1,7 @@
 <div>
   <h1>Chat</h1>
 </div>
+ {{> userinfo}}
 <div>
   <input type="text" id="chatBox" />
 </div>
@@ -12,15 +13,30 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-  const socket = io() const user = "{{user}}" let chatBox =
-  document.getElementById("chatBox") chatBox.addEventListener("keyup", evt => {
-  if (evt.key === "Enter") { if (chatBox.value.trim().length > 0) {
-  socket.emit("message", { user: user, message: chatBox.value }) chatBox.value =
-  "" } } }) socket.on("messageLogs", data => { let log =
-  document.getElementById('messageLogs') let messages = "" data.forEach(message
-  => { messages = messages + `${message.user} dice: ${message.message}<br>` })
-  log.innerHTML = messages }) socket.on("message", message => { let log =
-  document.getElementById('messageLogs'); log.innerHTML += `${message.user}
-  dice: ${message.message}<br>`; });
+    const socket = io();
+    const user = "{{user.email}}";
+    let chatBox = document.getElementById("chatBox");
 
+    chatBox.addEventListener("keyup", evt => {
+        if (evt.key === "Enter") {
+            if (chatBox.value.trim().length > 0) {
+                socket.emit("message", { user: user, message: chatBox.value });
+                chatBox.value = "";
+            }
+        }
+    });
+
+    socket.on("messageLogs", data => {
+        let log = document.getElementById('messageLogs');
+        let messages = "";
+        data.forEach(message => {
+            messages += `${message.user} dice: ${message.message}<br>`;
+        });
+        log.innerHTML = messages;
+    });
+
+    socket.on("message", message => {
+        let log = document.getElementById('messageLogs');
+        log.innerHTML += `${message.user} dice: ${message.message}<br>`;
+    });
 </script>

@@ -8,6 +8,7 @@
                 <th>Producto</th>
                 <th>Cantidad</th>
                 <th>Precio</th>
+                <th>Acción</th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +18,8 @@
                 <td>{{this.product.title}}</td>
                 <td>{{this.quantity}}</td>
                 <td>{{this.product.price}}</td>
+                 <td>
+                    <button class="delete-product" data-id="{{this.product._id}}">Delete</button></td>
             </tr>
             {{/each}}
         </tbody>
@@ -26,6 +29,7 @@
                 <td></td>
                 <td></td>
                 <th>{{cart.total}}</th>
+                <td> <button class="delete-cart" data-id="{{cid}}">Vaciar Carrito</button></td>
             </tr>
         </tfoot>
     </table>
@@ -34,58 +38,7 @@
         <button type="submit">Procesar Compra</button>
     </form>
 </div>
-
-
-<script>
-    document.getElementById('purchaseForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const form = event.target;
-        const cartId = form.cartId.value;
-
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ cartId })
-            });
-
-            if (!response.ok) {
-                throw new Error('Error al procesar la compra');
-            }
-
-            const result = await response.json();
-            let mensaje = " "
-                if(!result.products){
-                    mensaje = "El carrito esta vacio, favor agregar productos"
-                }else{
-                    const products = result.products
-                    mensaje = products.join('<br>') 
-                    mensaje+= "<br> sin Stock suficiente."
-                }
-
-            if (result.success) {
-                // Mostrar una alerta de éxito
-                Swal.fire({
-                    title: 'Éxito',
-                    html: `Compra procesada exitosamente.<br>${mensaje}`,
-                    icon: 'success'
-
-                }).then(() => {
-                    window.location.href = `/api/carts/${cartId}`;
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    html: `Error al procesar la compra.<br>${mensaje}`,
-                    icon: 'error'
-                });
-            }
-        } catch (error) {
-            console.log(error)
-
-        }
-    });
-</script>
+<script>const cid = "{{cid}}"</script>
+<script src="/js/functions.js"></script>
+<script src="/js/cart.js"></script>
+  

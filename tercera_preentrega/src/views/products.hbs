@@ -13,8 +13,8 @@
         {{/each}}
     </div>
     {{#if isAdmin}}
-    <div>
-        <a href="/api/product/create" class="createProduct">
+    <div class="createProduct">
+        <a href="/api/product/create" >
             <button>Agregar Producto</button>
         </a>
     </div>
@@ -40,12 +40,7 @@
                 <td>{{this.category}}</td>
                 <td>{{this.code}}</td>
                 <td>{{this.stock}}</td>
-                <td>
-                    <form action="/api/carts/" method="POST">
-                        <button type="submit" class="add-to-cart" data-id="{{id}}">Agregar al carrito</button>
-                        <input type="hidden" name="product" value="{{id}}">
-                    </form>
-
+                <td class="buttonActions"><button type="submit" class="add-to-cart" data-id="{{id}}">Agregar al carrito</button>
                     {{#if isAdmin}}
                     <a href="/api/product/edit/{{id}}">
                         <button class="edit-product" data-id="{{id}}">Edit</button>
@@ -68,51 +63,6 @@
         {{/if}}
     </div>
 </div>
-{{msg}}
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const successMessage = '{{msg}}';
-        if (successMessage) {
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Producto agregado correctamente",
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                window.location.href = '/api/products';
-            });
-        }
-    });
-</script>
-
-<script>
-    document.querySelectorAll('.delete-product').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            const productId = event.target.dataset.id;
-            try {
-                const response = await fetch(`/api/products/${productId}`, {
-                    method: 'DELETE'
-                });
-                if (!response.ok) {
-                    throw new Error('Error al eliminar el producto');
-                }
-
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Producto eliminado correctamente",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.location.href = '/api/products';
-                });
-
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-
-</script>
+<script src="/js/functions.js"></script>
+<script src="/js/product.js"></script>

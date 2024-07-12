@@ -22,6 +22,9 @@
         <a href="/profile"><button>Perfil</button></a>
       </div>
     {{/unless}}
+    {{#unless pageChat}}
+      <div><a href="/api/chat"><button>Chat</button></a></div>
+    {{/unless}}
     <div class="logout">
       <form action="/api/sessions/logout" method="POST">
         <button type="submit">Cerrar Sesión</button>
