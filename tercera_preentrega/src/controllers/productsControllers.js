@@ -2,7 +2,7 @@ import { isAdmin } from "../middleware/role.js";
 import * as ProductService from "../services/productsService.js";
 
 export async function getAllProducts(req, res) {
-  let { limit = 10, page = 1, sort, query, msg } = req.query;
+  let { limit = 10, page = 1, sort, query} = req.query;
   limit = parseInt(limit);
   page = parseInt(page);
   try {
@@ -20,7 +20,6 @@ export async function getAllProducts(req, res) {
     return res.render("products", {
       products: products,
       user: req.session.user,
-      msg,
       isAdmin: req.session.user.role === "admin",
       cart: req.session.user.cartId,
       pageProducts: "true",
@@ -62,8 +61,11 @@ export async function createProduct(req, res) {
     res.send({ status: "error", error: "Error en los datos ingresados" });
   }
   try {
-    let result = await ProductService.createProduct(productData);
-    res.redirect("/api/products");
+    await ProductService.createProduct(productData);
+    return res.status(200).json({
+      success: true,
+      message: "Producto agregado exitosamente",
+    });
   } catch (error) {
     res.send({ result: "error", payload: "Error en crear el producto" });
   }
@@ -88,7 +90,6 @@ export async function updateProduct(req, res) {
 
 export async function deleteProduct(req, res) {
   let pid = req.params;
-  console.log(pid);
   try {
     let result = await ProductService.deleteProduct(pid);
     res.send({ result: "success", payload: result });

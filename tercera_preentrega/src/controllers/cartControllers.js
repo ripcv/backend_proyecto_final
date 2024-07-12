@@ -35,8 +35,7 @@ export async function getCartByIdToRender(req, res) {
 export async function addProducts(req, res) {
   let { products = [] } = req.body;
   //asignamos el valor del id proveniente del formulario
-  let product = req.body.product;
-
+  let  product  = req.body.productId;
   try {
     let cartId = req.user.cartId ? req.user.cartId : null;
     let cart;
@@ -59,7 +58,10 @@ export async function addProducts(req, res) {
 
     await CartServices.addProducts(cart, products);
 
-    res.redirect("/api/products?msg=ok");
+    return res.status(200).json({
+      success: true,
+      message: "Producto agregado exitosamente",
+    });
   } catch (error) {
     console.log(error);
     res.send({ status: "error", error: "Error en el servidor" });
