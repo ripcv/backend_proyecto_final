@@ -1,4 +1,3 @@
-import { isAdmin } from "../middleware/role.js";
 import * as ProductService from "../services/productsService.js";
 
 export async function getAllProducts(req, res) {

@@ -1,5 +1,4 @@
 import productModel from "../dao/models/product.model.js";
-import { isAdmin } from "../middleware/role.js";
 import ProductRepository from "../repositories/product.repositories.js";
 
 const productRepository = new ProductRepository(productModel);

@@ -1,17 +1,17 @@
 import { Router } from "express";
 import { isAuthenticated } from "../middleware/auth.js";
 import * as ProductController from "../controllers/productsControllers.js";
-import { isAdmin } from "../middleware/role.js";
+import { authorize, ROLES } from "../middleware/authRoles.js";
 
 const router = Router();
 
-router.post("/", isAdmin, ProductController.createProduct);
+router.post("/", authorize([ROLES.admin]), ProductController.createProduct);
 
-router.put("/:pid", isAdmin, ProductController.updateProduct);
+router.put("/:pid", authorize([ROLES.admin]), ProductController.updateProduct);
 
 router.get("/:pid", ProductController.getProductById);
 
-router.delete("/:pid", isAdmin, ProductController.deleteProduct);
+router.delete("/:pid", authorize([ROLES.admin]), ProductController.deleteProduct);
 
 router.get("/", isAuthenticated, ProductController.getAllProducts);
 
