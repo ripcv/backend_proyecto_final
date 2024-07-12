@@ -14,7 +14,10 @@
 
 <script>
     const socket = io();
-    const user = "{{user.email}}";
+    let user = "{{user.email}}";
+    if(user.length===0){
+        user = "{{user.first_name}}"
+    }
     let chatBox = document.getElementById("chatBox");
 
     chatBox.addEventListener("keyup", evt => {
