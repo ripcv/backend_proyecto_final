@@ -62,8 +62,6 @@ router.get(
   "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/login" }),
   async (req, res) => {
-    await addCartToUser(req.user);
-
     req.session.user = req.user;
     res.redirect("/api/products");
   },

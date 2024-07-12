@@ -3,7 +3,7 @@ import local from "passport-local";
 import GitHubStrategy from "passport-github2";
 import * as UsersControllers from "../controllers/usersControllers.js";
 import userModel from "../dao/models/users.model.js";
-import { createHash } from "../utils.js";
+import { addCartToUser, createHash } from "../utils.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -79,6 +79,8 @@ const initializePassport = () => {
             let result = await userModel.create(newUser);
             done(null, result);
           } else {
+            const cartId = await addCartToUser(user._id);
+            user.cartId = cartId
             done(null, user);
           }
         } catch (error) {
