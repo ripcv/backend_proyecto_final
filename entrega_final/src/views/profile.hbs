@@ -1,0 +1,68 @@
+{{> userinfo}}
+<div>
+    <h2>Perfil de Usuario</h2>
+<p>Nombre: {{user.first_name}}</p>
+<p>Apellido: {{user.last_name}}</p>
+<p>Email: {{user.email}}</p>
+<p>Edad: {{user.age}}</p>
+</div>
+
+
+
+<form action="/api/sessions/logout" method="POST">
+    <button type="submit">Cerrar Sesión</button>
+</form>
+<div>
+{{#roleCheck user.role}}
+   <p>Para darse de baja de premium favor contactarse con la administración</p>
+   {{else}}
+   
+        <h2>Actualizar a premium</h2>
+        <p>Para actualizar a premium debes subir 3 archivos</p>
+
+    <form action="/api/users/{{../user.id}}/documents" method="post" enctype="multipart/form-data">
+           <label for="file1">Identificación:</label>
+        <input type="file" name="identificacion"  id="identificacion"required>
+         <button type="button" onclick="clearFileInput('identificacion')">Limpiar</button><br><br>
+        <label for="file2">Comprobante de domicilio:</label>
+        <input type="file" name="comprobante_domicilio"  id="comprobante_domicilio" required>
+          <button type="button" onclick="clearFileInput('comprobante_domicilio')">Limpiar</button><br><br>
+        <label for="file3">Comprobante estado de cuenta:</label>
+        <input type="file" name="comprobante_cuenta"  id="comprobante_cuenta" required> 
+         <button type="button" onclick="clearFileInput('comprobante_cuenta')">Limpiar</button><br><br>
+        <button type="submit">Subir archivos</button>
+    </form>
+
+{{/roleCheck}}
+</div>
+
+
+
+    <script>
+        function clearFileInput(id) {
+            const fileInput = document.getElementById(id);
+            fileInput.value = '';  
+        }
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const errorMessage = '{{messages.error}}';
+            const successMessage = '{{messages.success}}';
+            if (errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
+            }
+            if (successMessage) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito',
+                    text: successMessage,
+                });
+            }
+        });
+    </script>

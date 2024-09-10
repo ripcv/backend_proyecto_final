@@ -1,0 +1,38 @@
+<h2>Iniciar Sesión</h2>
+<form action="/api/sessions/login" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" required>
+    <button type="submit">Ingresar</button>
+</form>
+<div>
+     <a href="/api/sessions/github"><button>Entrar con Github</button></a>
+</div>
+</div>
+<a href="/register">Registrarse</a>
+<a href="/reset_password">Recuperar Contraseña</a>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const errorMessage = '{{messages.error}}';
+            const successMessage = '{{messages.success}}';
+            if (errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
+            }
+            if (successMessage) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito',
+                    text: successMessage,
+                });
+            }
+        });
+    </script>

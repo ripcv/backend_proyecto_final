@@ -1,0 +1,220 @@
+paths:
+  /products:
+    get:
+      summary: Obtener todos los productos
+      description: Obtiene una lista de productos con opciones de paginación, límite,
+        ordenamiento y filtro.
+      parameters:
+        - name: limit
+          in: query
+          description: Número máximo de productos a devolver
+          required: false
+          schema:
+            type: integer
+            example: 10
+        - name: page
+          in: query
+          description: Número de página para paginación
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: sort
+          in: query
+          description: Ordenamiento de los productos
+          required: false
+          schema:
+            type: string
+        - name: query
+          in: query
+          description: Filtro de búsqueda
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de productos
+          content:
+            text/html:
+              schema:
+                type: string
+        "500":
+          description: Error en la obtención de productos
+  "/products/{pid}":
+    get:
+      summary: Obtener producto por ID
+      description: Obtiene un producto específico usando su ID.
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+        "404":
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Producto no encontrado
+    post:
+      summary: Crear un nuevo producto
+      description: Crea un nuevo producto con los datos proporcionados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+      responses:
+        "200":
+          description: Producto creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Producto agregado exitosamente
+        "400":
+          description: Error en los datos ingresados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error en los datos ingresados
+    put:
+      summary: Actualizar un producto
+      description: Actualiza los datos de un producto existente.
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+      responses:
+        "200":
+          description: Producto actualizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+        "400":
+          description: No se proporcionaron datos para actualizar
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Debe actualizar por lo menos un registro
+        "404":
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: error
+                  payload:
+                    type: string
+                    example: Error al actualizar producto
+    delete:
+      summary: Eliminar un producto
+      description: Elimina un producto específico usando su ID.
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+        "404":
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: error
+                  payload:
+                    type: string
+                    example: Error al eliminar producto

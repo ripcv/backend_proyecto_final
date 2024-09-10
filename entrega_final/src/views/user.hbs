@@ -1,0 +1,36 @@
+{{> userinfo}}
+<div class="usersTable">
+
+<h1>Usuarios</h1>
+    <table class="table_display">
+        <thead>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Accion</th>
+        </thead>
+        <tbody>
+
+          {{#each viewUsers}}
+            <tr>
+               <td>{{this.first_name}}</td>
+               <td>{{this.last_name}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.role}}</td>
+                 <td class="buttonActions">
+                    <a href="/users/edit/{{this._id}}">
+                        <button class="edit-user" data-id="{{this._id}}">Edit</button>
+                    </a>
+                    <button class="delete-user" data-id="{{this._id}}">Delete</button>
+                   
+
+                </td> 
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+</div>
+<script src="/js/functions.js"></script>
+<script src="/js/user.js"></script>

@@ -1,0 +1,52 @@
+{{> userinfo}}
+
+<h1>Logger Test</h1>
+
+<div class="loggerContainer">
+    <div class="loggerButtons">
+    <button id="debugLog" class="btn-debug">Debug</button>
+    <button id="infoLog" class="btn-info">Info</button>
+    <button id="warningLog" class="btn-warning">Warning</button>
+    <button id="errorLog" class="btn-error">Error</button>
+    <button id="fatalLog" class="btn-fatal">Fatal</button>
+</div>
+</div>
+
+
+<script>
+   document.getElementById('debugLog').addEventListener('click', () => {
+        fetch('/loggerview/loggertest?level=debug')
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire('Debug Log', data.message, 'success')
+            })
+    })
+    document.getElementById('infoLog').addEventListener('click', () => {
+        fetch('/loggerview/loggertest?level=info')
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire('Debug Log', data.message, 'success')
+            })
+    })
+    document.getElementById('warningLog').addEventListener('click', () => {
+        fetch('/loggerview/loggertest?level=warning')
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire('Debug Log', data.message, 'warning')
+            })
+    })
+    document.getElementById('errorLog').addEventListener('click', () => {
+        fetch('/loggerview/loggertest?level=error')
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire('Debug Log', data.message, 'error')
+            })
+    })
+    document.getElementById('fatalLog').addEventListener('click', () => {
+        fetch('/loggerview/loggertest?level=fatal')
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire('Debug Log', data.message, 'error')
+            })
+    })
+</script>

@@ -1,0 +1,337 @@
+paths:
+  /carts:
+    get:
+      summary: Obtener todos los carritos
+      description: Obtiene una lista de todos los carritos.
+      responses:
+        '200':
+          description: Lista de carritos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      type: object
+        '500':
+          description: Error al obtener los carritos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error la obtención de los carritos
+
+  /carts/{cid}:
+    get:
+      summary: Obtener carrito por ID para renderizar
+      description: Obtiene un carrito específico usando su ID para renderizar la vista de carritos.
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Carrito encontrado y renderizado exitosamente
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: Carrito no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error en la obtención del carrito
+        '500':
+          description: Error en la obtención del carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error en la obtención de los productos
+
+    post:
+      summary: Agregar productos al carrito
+      description: Agrega productos al carrito existente o crea uno nuevo si no existe.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product:
+                        type: string
+      responses:
+        '200':
+          description: Productos agregados exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Producto agregado exitosamente
+        '400':
+          description: Error en los datos proporcionados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error en el servidor
+
+  /carts/{cid}/products/{pid}:
+    put:
+      summary: Actualizar contenido del carrito
+      description: Actualiza la cantidad de un producto en un carrito específico.
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: Carrito actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+        '400':
+          description: Error en los datos de la actualización
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Carrito con ID {cid} no encontrado
+        '500':
+          description: Error al actualizar el carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error actualizando el carrito
+
+    delete:
+      summary: Eliminar contenido del carrito
+      description: Elimina todo el contenido de un carrito específico.
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contenido del carrito eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+        '400':
+          description: Error en la eliminación del contenido del carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error eliminando el contenido
+
+  /carts/{cid}/products/{pid}/delete:
+    delete:
+      summary: Eliminar producto del carrito
+      description: Elimina un producto específico de un carrito.
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto eliminado del carrito exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+        '400':
+          description: Error en la eliminación del producto del carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error eliminando el producto
+        '500':
+          description: Error en la eliminación del producto del carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Error eliminando el producto
+
+  /carts/purchase:
+    post:
+      summary: Procesar compra del carrito
+      description: Procesa la compra del carrito y envía un correo con el ticket.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: string
+      responses:
+        '200':
+          description: Compra procesada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Compra procesada exitosamente
+                  ticket:
+                    type: object
+                  products:
+                    type: array
+                    items:
+                      type: object
+        '400':
+          description: Carrito vacío o error en el procesamiento
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Carrito Vacío o Compra No procesada
+                  products:
+                    type: array
+                    items:
+                      type: object

@@ -1,0 +1,28 @@
+<h1>{{#if product}}Editar Producto{{else}}Crear Producto{{/if}}</h1>
+<form id="productForm">
+  <label for="title">Título:</label>
+  <input type="text" id="title" name="title" value="{{product.title}}" required />
+
+  <label for="description">Descripción:</label>
+  <input type="text" id="description" name="description" value="{{product.description}}"  />
+
+  <label for="price">Precio:</label>
+  <input type="number" id="price" name="price" value="{{product.price}}" required />
+
+  <label for="category">Categoría:</label>
+  <input type="text" id="category" name="category" value="{{product.category}}" required />
+
+  <label for="code">Código:</label>
+  <input type="text" id="code" name="code" value="{{product.code}}" required />
+
+  <label for="stock">Stock:</label>
+  <input type="number" id="stock" name="stock" value="{{product.stock}}" required />
+
+  <button type="submit">{{#if product}}Guardar Cambios{{else}}Crear Producto{{/if}}</button>
+</form>
+
+<script>
+const productId = "{{product._id}}";
+</script>
+<script src="/js/functions.js"></script>
+<script src="/js/product.js"></script>

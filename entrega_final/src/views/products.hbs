@@ -1,0 +1,75 @@
+<div>
+    <h1>Productos</h1>
+    {{> userinfo}}
+    <h5>Categorias para Filtrar</h5>
+    <div class="categories">
+        <p>
+            <a href="/products">Todas</a>
+        </p>
+        {{#each products.categories}}
+        <p>
+            <a href="/products?query={{this}}">{{this}}</a>
+        </p>
+        {{/each}}
+    </div>
+    {{#roleCheck user.role}}
+    <div class="createProduct">
+        <a href="/products/create" >
+            <button>Agregar Producto</button>
+        </a>
+    </div>
+    {{/roleCheck}}
+    <table class="table_display">
+        <thead>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            {{!-- <th>Thumbnail</th> --}}
+            <th>Category</th>
+            <th>Code</th>
+            <th>Stock</th>
+            <th>Accion</th>
+        </thead>
+        <tbody>
+               
+            {{#each products.payload}}
+            <tr>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                {{!-- <td>{{this.thumbnail}}</td> --}}
+                <td>{{this.category}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.stock}}</td>
+                 
+                <td class="buttonActions"><button type="submit" class="add-to-cart" data-id="{{id}}"  data-owner="{{this.owner}}">Agregar al carrito</button>
+                 
+                    {{#roleOwnerCheck ../user.id owner ../user.role}} 
+                    <a href="/products/edit/{{../id}}">
+                        <button class="edit-product" data-id="{{../id}}">Edit</button>
+                    </a>
+                    <button class="delete-product" data-id="{{../id}}">Delete</button>
+                    {{/roleOwnerCheck}}
+
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div class="pagination" style="text-align: center;">
+        {{#if products.hasPrevPage}}
+        <a href="{{products.prevLink}}">Anterior</a>
+        {{/if}}
+        &nbsp;&nbsp;
+        {{#if products.hasNextPage}}
+        <a href="{{products.nextLink}}">Siguiente</a>
+        {{/if}}
+    </div>
+</div>
+
+<script>
+  const userId = '{{user.id}}'
+</script>
+
+<script src="/js/functions.js"></script>
+<script src="/js/product.js"></script>

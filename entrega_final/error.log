@@ -1,0 +1,18 @@
+{"level":"error","timestamp":"2024-07-29T01:40:41.199Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of null (reading 'payload')","timestamp":"2024-07-29T01:41:25.168Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: ProductService.etAllProducts is not a function","timestamp":"2024-07-29T01:42:36.199Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: ProductService.etAllProducts is not a function","timestamp":"2024-07-29T01:42:49.404Z"}
+{"level":"error","message":"Este es un log nivel error","timestamp":"2024-07-31T00:46:44.729Z"}
+{"level":"error","message":"Este es un log nivel fatal","timestamp":"2024-07-31T00:46:48.027Z"}
+{"level":"error","message":"Este es un log nivel error","timestamp":"2024-07-31T00:48:22.349Z"}
+{"level":"error","message":"Este es un log nivel fatal","timestamp":"2024-07-31T00:48:25.268Z"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"664d37f5cb48c4c242e29e48  data-owner=\"","timestamp":"2024-08-08T17:35:42.602Z","value":"664d37f5cb48c4c242e29e48  data-owner=","valueType":"string"}
+{"kind":"ObjectId","level":"error","path":"_id","reason":{},"stringValue":"\"664d37f5cb48c4c242e29e48  data-owner=\"","timestamp":"2024-08-08T17:36:36.325Z","value":"664d37f5cb48c4c242e29e48  data-owner=","valueType":"string"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:23:24.909Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:23:54.940Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:25:30.549Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:26:10.569Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:26:27.217Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:26:38.164Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:27:24.507Z"}
+{"level":"error","message":"Error al obtener los productos TypeError: Cannot read properties of undefined (reading 'cartId')","timestamp":"2024-08-30T14:30:01.544Z"}
