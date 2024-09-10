@@ -22,7 +22,7 @@
                     <a href="/users/edit/{{this._id}}">
                         <button class="edit-user" data-id="{{this._id}}">Edit</button>
                     </a>
-                    <button class="delete-user" data-id="{{this._id}}">Delete</button>
+                   {{#roleCheck this.role}} {{else}}<button class="delete-user" data-id="{{this._id}}">Delete</button> {{/roleCheck}} 
                    
 
                 </td> 

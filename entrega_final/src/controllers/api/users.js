@@ -38,13 +38,11 @@ class ApiUserController {
       role: user.role,
     }));
 
-    return res
-      .status(200)
-      .json({
-        status: "success",
-        message: "usuarios obtenidos correctamente",
-        payload: userDtos,
-      });
+    return res.status(200).json({
+      status: "success",
+      message: "usuarios obtenidos correctamente",
+      payload: userDtos,
+    });
   }
 
   async getUserById(req, res) {
@@ -72,7 +70,7 @@ class ApiUserController {
 
   async updateUser(reqOrUserID, updateOrRes, res = null) {
     let userID, updates;
-    
+
     // Manejo de parámetros
     if (typeof reqOrUserID === "object" && reqOrUserID.hasOwnProperty("body")) {
       const req = reqOrUserID;
@@ -83,31 +81,40 @@ class ApiUserController {
       userID = reqOrUserID;
       updates = updateOrRes;
     }
-  
+
     // Validación de parámetros
     if (!userID || !updates || Object.keys(updates).length === 0) {
-      const errorMessage = { status: "error", message: "Faltan parámetros necesarios." };
+      const errorMessage = {
+        status: "error",
+        message: "Faltan parámetros necesarios.",
+      };
       if (res) {
         return res.status(400).json(errorMessage);
       } else {
         return errorMessage;
       }
     }
-  
+
     // Actualización de usuario
     const update = await UserService.updateUser(userID, updates);
-  
+
     if (!update) {
-      const errorMessage = { status: "error", message: "Error al actualizar el usuario." };
+      const errorMessage = {
+        status: "error",
+        message: "Error al actualizar el usuario.",
+      };
       if (res) {
         return res.status(400).json(errorMessage);
       } else {
         return errorMessage;
       }
     }
-  
-    const successMessage = { status: "success", message: "Usuario Actualizado" };
-    
+
+    const successMessage = {
+      status: "success",
+      message: "Usuario Actualizado",
+    };
+
     // Responder según el contexto
     if (res) {
       return res.status(200).json(successMessage);
@@ -115,7 +122,6 @@ class ApiUserController {
       return successMessage;
     }
   }
-  
 
   async uploadDocuments(req, res) {
     const user = await UserService.getUserById(req.user.id);
@@ -155,27 +161,32 @@ class ApiUserController {
   async updatepremium(req, res) {
     const userID = req.params.uid;
     const user = await UserService.getUserById(userID);
-
-    if (user.documents.length != 0 && req.body.role) {
-      const update = await UserService.updateUser(userID, {
-        role: req.body.role,
-      });
-      if (!update)
-        res.status(400).json({
-          status: "error",
-          message: "Error al actualizar el usuario.",
+    if (user) {
+      if (user.documents.length != 0 && req.body.role) {
+        const update = await UserService.updateUser(userID, {
+          role: req.body.role,
         });
-      if (req.body.role === "user")
-        await UserService.updateUser(userID, { documents: [] });
-      res
-        .status(200)
-        .json({ status: "success", message: "Cambio de rol exitoso." });
-    } else {
-      res.status(400).json({
-        status: "error",
-        message: "Faltan archivos o el parametro de actualización.",
-      });
+        if (!update)
+          res.status(400).json({
+            status: "error",
+            message: "Error al actualizar el usuario.",
+          });
+        if (req.body.role === "user")
+          await UserService.updateUser(userID, { documents: [] });
+        return res
+          .status(200)
+          .json({ status: "success", message: "Cambio de rol exitoso." });
+      } else {
+        return res.status(400).json({
+          status: "error",
+          message: "Usuario no ha subido los Documentos requeridos.",
+        });
+      }
     }
+    return res.status(400).json({
+      status: "error",
+      message: "Error al actualizar el usuario.",
+    });
   }
 
   async deleteUsersByLastLogin(req, res) {
