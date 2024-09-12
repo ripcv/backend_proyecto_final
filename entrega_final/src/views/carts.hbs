@@ -34,9 +34,9 @@
             </tr>
         </tfoot>
     </table>
-    <form id="purchaseForm" action="/carts/{{cid}}/purchase" method="POST">
+    <form id="purchaseForm" action="/api/carts/{{cid}}/purchase" method="POST">
         <input type="hidden" name="cartId" value="{{cid}}">
-        <button type="submit">Procesar Compra</button>
+        <button type="submit" {{#if cart.products}}{{else}}disabled{{/if}}>Procesar Compra</button>
     </form>
 </div>
 <script>const cid = "{{cid}}"</script>
