@@ -72,10 +72,10 @@ app.use(
         process.env.TEST_ENV === "true"
           ? process.env.TEST_MONGO_URL
           : process.env.MONGO_URL,
-      ttl: 14 * 24 * 60 * 60, // le damos un tiempo de vida a la session de 14 días
+      ttl:   24 * 60 * 60,  
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60, // se permite la session por 1 hora
+      maxAge: 1000 * 60 * 60,  
       httpOnly: true,
     },
   })

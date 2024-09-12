@@ -9,7 +9,7 @@ const userRepository = new UserRepository(userModel);
 
 export async function createUser(newUser) {
   try {
-    let user = await userRepository.findUser({ email: newUser.email });
+    const [user] = await userRepository.findUser({ email: newUser.email });
     if (user) {
       logger.warning("El usuario ya existe");
       return { success: false, message: "El usuario ya existe" };
@@ -23,10 +23,9 @@ export async function createUser(newUser) {
 
 export async function loginFindUser(username, password) {
   try {
-    const user = await userRepository.findUser({ email: username });
-
+    const [user] = await userRepository.findUser({ email: username });
      if (!user) {
-      return;
+      return false
     }
     if (!isValidPassword(user, password))return false
     const userDTO = new UserDto(
@@ -85,9 +84,17 @@ export async function deleteUsers(uid) {
 export async function deleteUsersByLastLogin() {
   const lastLogin = new Date();
   lastLogin.setDate(lastLogin.getDate() - 2);
+  console.log(lastLogin)
   try {
+   const users = await userRepository.findUser({last_connection : {$lt: lastLogin}})
+   if(users){
+
+
     const deleteUsersByLastLogin = await userRepository.deleteUsers({last_connection : {$lt: lastLogin}});
     if (!deleteUsersByLastLogin) return false;
     return deleteUsersByLastLogin;
+   }
+ 
+    
   } catch (error) {}
 }

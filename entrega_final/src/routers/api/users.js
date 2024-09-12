@@ -15,7 +15,7 @@ ApiUserRouter.put("/premium/:uid", ApiUser.updatepremium);
 
 ApiUserRouter.post("/:uid/documents", ApiUser.uploadDocuments);
 
-ApiUserRouter.delete("/", ApiUser.deleteUsersByLastLogin);
+ApiUserRouter.delete("/last_connection", ApiUser.deleteUsersByLastLogin);
 
 ApiUserRouter.delete("/:uid", ApiUser.deleteUser);
 export default ApiUserRouter;

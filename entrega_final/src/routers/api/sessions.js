@@ -22,6 +22,7 @@ router.post(
           .send({ status: "error", message: req.session.messages });
       }
     }
+    req.flash("success", "Usuario Creado Correctamente");
     return res.redirect("/");
   }
 );

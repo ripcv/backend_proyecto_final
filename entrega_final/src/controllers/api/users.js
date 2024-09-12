@@ -190,9 +190,10 @@ class ApiUserController {
   }
 
   async deleteUsersByLastLogin(req, res) {
+    
     const result = await UserService.deleteUsersByLastLogin();
-    if (!result)
-      res.status(400).json({
+    if (result.deletedCount === 0)
+     return res.status(400).json({
         status: "error",
         message:
           "Error al eliminar o no existen usuarios que cumplen el criterio.",

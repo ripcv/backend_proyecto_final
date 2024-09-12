@@ -10,29 +10,27 @@ class UserRepository {
     return user;
   }
 
-  async getAllUsers(){
-    const users = await this.userModel.find().lean().select('-password')
-    return users
+  async getAllUsers() {
+    const users = await this.userModel.find().lean().select("-password");
+    return users;
   }
   async findUser(filter) {
-    
-    const user = await this.userModel.findOne(filter);
+    const user = await this.userModel.find(filter);
     return user;
   }
 
-  async updateUser(userID, updates){
+  async updateUser(userID, updates) {
     const result = await userModel.updateOne(
       { _id: userID },
       { $set: updates }
-    );                        
-  return   result
-
+    );
+    return result;
   }
 
-  async deleteUsers(filter){
-    const result = await userModel.deleteMany(filter)
-    if(!result) return false
-    return result
+  async deleteUsers(filter) {
+    const result = await userModel.deleteMany(filter);
+    if (!result) return false;
+    return result;
   }
 }
 
