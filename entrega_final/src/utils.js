@@ -108,6 +108,21 @@ export async function sendMailDeleteUser(email){
   })
 }
 
+export async function sendMailDeleteProduct(email, product){
+  let result = await transport.sendMail({
+    from: "No Responder <gefallene.engel@gmail.com>",
+    to: email,
+    subject: `Eliminación de producto: ${product}`,
+    html: ` 
+    <div style="text-align: center;">
+    <h1 style="font-size: 24px;">Producto Eliminado</h1>
+    <p style="font-size: 16px; line-height: 1.5;">
+      El producto ${product} fue eliminado de nuestros registros.
+    </p>
+  </div>`
+  })
+}
+
 export async function mockingProducts() {
   let products = {
     payload: [],

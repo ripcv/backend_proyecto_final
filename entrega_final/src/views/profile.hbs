@@ -14,7 +14,7 @@
 </form>
 <div>
 {{#roleCheck user.role}}
-   <p>Para darse de baja de premium favor contactarse con la administración</p>
+   {{#eq ../user.role 'premium'}} <p>Para darse de baja de premium favor contactarse con la administración</p> {{/eq}}
    {{else}}
    
         <h2>Actualizar a premium</h2>

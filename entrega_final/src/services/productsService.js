@@ -59,10 +59,7 @@ export async function updateProduct(pid, productToReplace) {
 }
 
 export async function deleteProduct(pid) {
-  const product = await productModel.find({_id: pid.pid})
-  
-   console.log(product)
-  //const result = await productModel.deleteOne({ _id: pid.pid });
+  const result = await productModel.deleteOne({ _id: pid.pid });
   return result;
 }
 
