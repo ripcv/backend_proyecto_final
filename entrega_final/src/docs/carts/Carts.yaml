@@ -1,5 +1,5 @@
 paths:
-  /carts:
+  /api/carts:
     get:
       summary: Obtener todos los carritos
       description: Obtiene una lista de todos los carritos.
@@ -32,7 +32,7 @@ paths:
                     type: string
                     example: Error la obtención de los carritos
 
-  /carts/{cid}:
+  /api/carts/{cid}:
     get:
       summary: Obtener carrito por ID para renderizar
       description: Obtiene un carrito específico usando su ID para renderizar la vista de carritos.
@@ -124,7 +124,7 @@ paths:
                     type: string
                     example: Error en el servidor
 
-  /carts/{cid}/products/{pid}:
+  /api/carts/{cid}/products/{pid}:
     put:
       summary: Actualizar contenido del carrito
       description: Actualiza la cantidad de un producto en un carrito específico.
@@ -228,7 +228,7 @@ paths:
                     type: string
                     example: Error eliminando el contenido
 
-  /carts/{cid}/products/{pid}/delete:
+  /api/carts/{cid}/products/{pid}/delete:
     delete:
       summary: Eliminar producto del carrito
       description: Elimina un producto específico de un carrito.
@@ -285,7 +285,7 @@ paths:
                     type: string
                     example: Error eliminando el producto
 
-  /carts/purchase:
+  /api/carts/purchase:
     post:
       summary: Procesar compra del carrito
       description: Procesa la compra del carrito y envía un correo con el ticket.

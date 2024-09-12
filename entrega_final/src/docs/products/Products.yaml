@@ -1,5 +1,5 @@
 paths:
-  /products:
+  /api/products:
     get:
       summary: Obtener todos los productos
       description: Obtiene una lista de productos con opciones de paginación, límite,
@@ -40,7 +40,7 @@ paths:
                 type: string
         "500":
           description: Error en la obtención de productos
-  "/products/{pid}":
+  "/api/products/{pid}":
     get:
       summary: Obtener producto por ID
       description: Obtiene un producto específico usando su ID.
