@@ -93,6 +93,21 @@ export async function sendMailToken(email, url) {
   });
 }
 
+export async function sendMailDeleteUser(email){
+  let result = await transport.sendMail({
+    from: "No Responder <gefallene.engel@gmail.com>",
+    to: email,
+    subject: "Eliminación de usuario por inactividad",
+    html: ` 
+    <div style="text-align: center;">
+    <h1 style="font-size: 24px;">Usuario Eliminado</h1>
+    <p style="font-size: 16px; line-height: 1.5;">
+      Su usuario ha sido eliminado por inactividad en el sitio.
+    </p>
+  </div>`
+  })
+}
+
 export async function mockingProducts() {
   let products = {
     payload: [],

@@ -1,5 +1,5 @@
 import userModel from "../dao/models/users.model.js";
-import { isValidPassword } from "../utils.js";
+import { isValidPassword, sendMailDeleteUser } from "../utils.js";
 import UserDto from "../dto/user.dto.js";
 import UserRepository from "../repositories/user.repositories.js";
 import { addCartToUser } from "../utils.js";
@@ -24,10 +24,10 @@ export async function createUser(newUser) {
 export async function loginFindUser(username, password) {
   try {
     const [user] = await userRepository.findUser({ email: username });
-     if (!user) {
-      return false
+    if (!user) {
+      return false;
     }
-    if (!isValidPassword(user, password))return false
+    if (!isValidPassword(user, password)) return false;
     const userDTO = new UserDto(
       user._id,
       user.first_name,
@@ -38,7 +38,7 @@ export async function loginFindUser(username, password) {
       user.cartId ? user.cartId._id : null,
       user.documents ? user.documents : null,
       user.last_connection
-    ); 
+    );
     const newCartId = await addCartToUser(user._id);
     if (newCartId) userDTO.cartId = newCartId;
     await updateUser(user._id, { last_connection: new Date() });
@@ -76,7 +76,7 @@ export async function updateUser(userID, updates) {
 
 export async function deleteUsers(uid) {
   try {
-    const deleteUser = await userRepository.deleteUsers({_id : uid});
+    const deleteUser = await userRepository.deleteUsers({ _id: uid });
     return true;
   } catch (error) {}
 }
@@ -84,17 +84,28 @@ export async function deleteUsers(uid) {
 export async function deleteUsersByLastLogin() {
   const lastLogin = new Date();
   lastLogin.setDate(lastLogin.getDate() - 2);
-  console.log(lastLogin)
+  console.log(lastLogin);
   try {
-   const users = await userRepository.findUser({last_connection : {$lt: lastLogin}})
-   if(users){
-
-
-    const deleteUsersByLastLogin = await userRepository.deleteUsers({last_connection : {$lt: lastLogin}});
-    if (!deleteUsersByLastLogin) return false;
-    return deleteUsersByLastLogin;
-   }
- 
-    
-  } catch (error) {}
+    //Solo traemos los usuarios que no son administradores
+    const users = await userRepository.findUser({
+      last_connection: { $lt: lastLogin },
+      role: { $ne: "admin" },
+    });
+    if (users) {
+      //enviamos el mail y eliminamos el usuario
+      for (const user of users) {
+        try {
+          await sendMailDeleteUser(user.email);
+          await userRepository.deleteUsers({ _id: user._id });
+        } catch (error) {
+          throw error;
+        }
+      }
+      return users.length;
+    }
+    //si no se encontro ningun usuario retornamos false
+    return false;
+  } catch (error) {
+    throw error;
+  }
 }

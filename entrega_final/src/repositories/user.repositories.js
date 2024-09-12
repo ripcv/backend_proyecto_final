@@ -28,7 +28,7 @@ class UserRepository {
   }
 
   async deleteUsers(filter) {
-    const result = await userModel.deleteMany(filter);
+    const result = await userModel.delete(filter);
     if (!result) return false;
     return result;
   }

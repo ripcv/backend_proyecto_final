@@ -192,7 +192,7 @@ class ApiUserController {
   async deleteUsersByLastLogin(req, res) {
     
     const result = await UserService.deleteUsersByLastLogin();
-    if (result.deletedCount === 0)
+    if (result === 0)
      return res.status(400).json({
         status: "error",
         message:
