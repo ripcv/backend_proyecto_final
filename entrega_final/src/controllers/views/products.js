@@ -1,5 +1,5 @@
 import * as ProductService from "../../services/productsService.js"
-
+import * as UserService from "../../services/usersService.js"
 class ViewProductController{
     async getAllProducts(req, res){
         const products = await ProductService.getAllProducts(req.query);
@@ -25,8 +25,9 @@ class ViewProductController{
             return res.status(500).send("Error al cargar el producto");
           }
         }
-      
-        res.render("productForm", { product });
+
+        const [owner] = await UserService.getUserById(product.owner.toString())
+        res.render("productForm", { product , owner: owner.email });
       }
 }
 

@@ -18,6 +18,10 @@
   <label for="stock">Stock:</label>
   <input type="number" id="stock" name="stock" value="{{product.stock}}" required />
 
+  <label for="owner">Owner:</label>
+  <input type="string" id="owner" name="owner" value="{{owner}}" required />
+  <input type="hidden" id="ownerId" name="ownerId" value="{{product.owner}}" required />
+
   <button type="submit">{{#if product}}Guardar Cambios{{else}}Crear Producto{{/if}}</button>
 </form>
 

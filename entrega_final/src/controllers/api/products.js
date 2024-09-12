@@ -1,4 +1,5 @@
 import * as ProductService from "../../services/productsService.js";
+import * as UserService from "../../services/usersService.js"
 import { logger } from "../../logger/logger.js";
 
 class ApiProductsController {
@@ -42,17 +43,35 @@ class ApiProductsController {
   }
 
   async updateProduct(req, res) {
-    let { pid } = req.params;
-    let productToReplace = req.body;
+    const { pid } = req.params;
+    const productToReplace = req.body;
+    let updateProduct = {}
     if (!productToReplace || Object.keys(productToReplace).length === 0) {
       return res.send({
         status: "error",
         error: "Debe actualizar por lo menos un registro",
       });
     }
+    const [user] = await UserService.getUserById(productToReplace.ownerId)
+     if(productToReplace.owner!=user.email){
+      console.log("El owner cambio")
+      const [newOwner] = await UserService.findUser({email : productToReplace.owner})
+      if(!newOwner){
+        return res.send({ status: "error", message: "El usuario ingresado como owner no existe" });}
+      else if(newOwner.role === 'user'){
+        return res.send({ status: "error", message: "El usuario ingresado no tiene privilegios para ser Owner" });}
+      else{
+          updateProduct = {
+            ...productToReplace,
+            owner : newOwner._id
+          } 
+          delete updateProduct.ownerId
+      }
+     }
+     
     try {
-      let result = await ProductService.updateProduct(pid, productToReplace);
-      return res.send({ result: "success", payload: result });
+      let result = await ProductService.updateProduct(pid, updateProduct);
+      return res.send({ status: "success", payload: result ,message : "Producto actualizado correctamente"});
     } catch (error) {
       res.send({ result: "Error", payload: "Error al actualizar producto" });
     }
@@ -62,7 +81,7 @@ class ApiProductsController {
     let pid = req.params;
     try {
       let result = await ProductService.deleteProduct(pid);
-      res.send({ result: "success", payload: result });
+      res.send({ result: "success", payload: result} );
     } catch (error) {
       res.send({ result: "Error", payload: "Error al eliminar producto" });
     }

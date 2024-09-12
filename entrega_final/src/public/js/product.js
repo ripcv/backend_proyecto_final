@@ -74,8 +74,8 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
             throw new Error('Error en la solicitud');
           }
     
-          //const result = await response.json();
-          sweetAlert("top-end","success","Producto actualizado correctamente",'/products')
+         const result = await response.json();
+          sweetAlert("top-end",result.status,result.message,result.status==='error'?'':`/products`)
     
         } catch (error) {
             console.error('Error:', error);

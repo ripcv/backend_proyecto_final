@@ -64,6 +64,11 @@ export async function getUserById(userId) {
   return user;
 }
 
+export async function findUser(filter) {
+  const user = await userRepository.findUser(filter);
+  return user;
+}
+
 export async function updateUser(userID, updates) {
   try {
     const userUpdate = await userRepository.updateUser(userID, updates);
