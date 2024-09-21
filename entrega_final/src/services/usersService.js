@@ -89,7 +89,6 @@ export async function deleteUsers(uid) {
 export async function deleteUsersByLastLogin() {
   const lastLogin = new Date();
   lastLogin.setDate(lastLogin.getDate() - 2);
-  console.log(lastLogin);
   try {
     //Solo traemos los usuarios que no son administradores
     const users = await userRepository.findUser({

@@ -53,9 +53,9 @@ class ApiProductsController {
         error: "Debe actualizar por lo menos un registro",
       });
     }
+    try {
     const [user] = await UserService.getUserById(productToReplace.ownerId);
     if (productToReplace.owner != user.email) {
-      console.log("El owner cambio");
       const [newOwner] = await UserService.findUser({
         email: productToReplace.owner,
       });
@@ -78,7 +78,6 @@ class ApiProductsController {
       }
     }
 
-    try {
       let result = await ProductService.updateProduct(pid, updateProduct);
       return res.send({
         status: "success",

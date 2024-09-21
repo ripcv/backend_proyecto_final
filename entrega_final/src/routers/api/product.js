@@ -13,12 +13,17 @@ ApiProductRouter.get("/:pid", ApiProducts.getProductById);
 ApiProductRouter.post(
   "/",
   isAuthenticated,
-  authorize([ROLES.admin]),
+  authorize([ROLES.admin,ROLES.premium]),
   ApiProducts.createProduct
 );
 
 ApiProductRouter.put("/:pid", isAuthenticated, ApiProducts.updateProduct);
 
-ApiProductRouter.delete("/:pid", authorize([ROLES.admin]), ApiProducts.deleteProduct);
+ApiProductRouter.delete(
+  "/:pid",
+  isAuthenticated,
+  authorize([ROLES.admin, ROLES.premium]),
+  ApiProducts.deleteProduct
+);
 
 export default ApiProductRouter;
