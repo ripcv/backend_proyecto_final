@@ -75,7 +75,7 @@ document
             const { error, paymentIntent } = await stripe.confirmPayment({
               elements,
               confirmParams: {
-                return_url: "http://localhost:8080/products",
+                return_url: `${process.env.BASE_URL}/products`,
                 payment_method_data: {
                   billing_details: {
                     name: userName,

@@ -12,7 +12,7 @@ if (process.env.TEST_ENV !== "true") {
   process.exit(0);
 }
 
-const requester = supertest("http://localhost:8080");
+const requester = supertest(process.env.BASE_URL);
 
 const loginAndGetCookie = async () => {
   const loginResponse = await requester

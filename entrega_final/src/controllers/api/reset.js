@@ -25,7 +25,7 @@ export async function resetPassword(req, res) {
   }
   const token = randomeToken();
   if (saveToken(user._id, token)) {
-    const url = `localhost:8080/change_password?token=${token}&id=${user._id}`;
+    const url = `${process.env.BASE_URL}/change_password?token=${token}&id=${user._id}`;
     sendMailToken(email, url);
     //se deja url por consola en caso de usar un correo que no exista
     console.log(url);
