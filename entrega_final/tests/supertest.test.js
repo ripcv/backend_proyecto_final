@@ -43,7 +43,7 @@ const testProductos = async () => {
           owner: "66c695afec80fc107f5b752a",
         };
         const response = await requester
-          .post("/products")
+          .post("/api/products")
           .set("Cookie", cookie)
           .send(productMock);
         expect(response._body.payload).to.have.property("_id");
@@ -52,7 +52,7 @@ const testProductos = async () => {
     describe("Test Listar Producto por ID", () => {
       it("El endpoit GET /products/:pid listar un producto especifico", async () => {
         const response = await requester
-          .get("/products/66c695e2ec80fc107f5b7532")
+          .get("/api/products/66c695e2ec80fc107f5b7532")
           .set("Cookie", cookie);
         expect(response._body.payload).to.have.property("_id");
       });
@@ -66,7 +66,7 @@ const testProductos = async () => {
           price: faker.commerce.price(),
         };
         const response = await requester
-          .put("/products/66c69a7fd16e5a171b7bf1dd")
+          .put("/api/products/66c69a7fd16e5a171b7bf1dd")
           .set("Cookie", cookie)
           .send(productMock);
         expect(response._body.payload).to.have.property("acknowledged");
@@ -142,7 +142,7 @@ const testCarrito = async () => {
   describe("Test Listar Carrito por ID Especifico", () => {
     it("El endpoit GET /carts/:cid mostrara un cart especifico", async () => {
       const response = await requester
-        .get("/carts/66c659594bd5c8812483d087")
+        .get("/api/carts/66c659594bd5c8812483d087")
         .set("Cookie", cookie);
 
       expect(response._body.payload).to.have.property("_id");
@@ -154,7 +154,7 @@ const testCarrito = async () => {
         productId: "66c6968afd8180d31d9d6edc",
       };
       const response = await requester
-        .post("/carts")
+        .post("/api/carts")
         .set("Cookie", cookie)
         .send(product);
       expect(response._body).to.have.property("message");

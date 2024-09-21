@@ -10,6 +10,7 @@ import sessionsRouter from "./api/sessions.js";
 import ApiProductRouter from "./api/product.js";
 import ApiUserRouter from "./api/users.js";
 import ApiCartRouter from "./api/cart.js";
+import PaymentRouter from "./api/payment.js";
 
 //Varios
 import mockingRouter from "./mocks.router.js";
@@ -21,6 +22,7 @@ app.use("/api/sessions", sessionsRouter);
 app.use("/api/users", ApiUserRouter);
 app.use("/api/products", ApiProductRouter);
 app.use("/api/carts", ApiCartRouter);
+app.use("/api/payment",PaymentRouter)
 //View Routers
 app.use("/products", ViewProductRouter);
 app.use("/carts", ViewCartRouter);

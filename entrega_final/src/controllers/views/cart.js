@@ -12,6 +12,7 @@ class ViewCartController{
         user: req.session.user,
         isAdmin: req.session.user.role === "admin",
         pageCart: "true",
+        stripe_pk : process.env.STRIPE_PK,
       });
       } catch (error) {
         res.send({

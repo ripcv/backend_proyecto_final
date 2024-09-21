@@ -18,7 +18,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 import { roleOwnerCheck, roleCheck, eq } from "./views/helper.js";
 import setupRoutes from "./routers/routes.js";
-
+import cors from "cors"
 
 dotenv.config();
 console.log("Entrega Final");
@@ -86,6 +86,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(addLogger);
+app.use(cors());
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash();
