@@ -1,19 +1,16 @@
 import { Router } from "express";
 import passport from "passport";
 import { logger } from "../../logger/logger.js";
-import {
-  resetPassword,
-  changePassword,
-} from "../../controllers/api/reset.js";
-import ApiUserController  from "../../controllers/api/users.js";
+import { resetPassword, changePassword } from "../../controllers/api/reset.js";
+import ApiUserController from "../../controllers/api/users.js";
 const router = Router();
-const ApiUser = new ApiUserController()
+const ApiUser = new ApiUserController();
 
 router.post(
   "/register",
   passport.authenticate("register", { failureRedirect: "failregister" }),
   async (req, res) => {
-    if (process.env.TEST_ENV==='true') {
+    if (process.env.TEST_ENV === "true") {
       if (req.user) {
         return res.status(200).send({ status: "success", payload: req.user });
       } else {
@@ -76,9 +73,12 @@ router.get("/faillogin", (req, res) => {
   res.redirect("/");
 });
 
-router.post("/logout", async(req, res) => {
-  const result = await ApiUser.updateUser(req.session.user.id, { last_connection: new Date() });
-  
+router.post("/logout", async (req, res) => {
+  const result = await ApiUser.updateUser(
+    req.session.user.id ? req.session.user.id : req.session.user._id,
+    { last_connection: new Date() }
+  );
+
   if (result.status === "success") {
     req.session.destroy((err) => {
       if (err) return res.status(500).send("Error al cerrar sesión");

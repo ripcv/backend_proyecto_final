@@ -6,7 +6,7 @@ import userModel from "../dao/models/users.model.js";
 import { addCartToUser, createHash } from "../utils.js";
 
 const LocalStrategy = local.Strategy;
-const ApiUser = new ApiUserController
+const ApiUser = new ApiUserController();
 const initializePassport = () => {
   //Registro de Usuario
   passport.use(
@@ -80,10 +80,10 @@ const initializePassport = () => {
               githubId: profile._json.id,
             };
             let result = await userModel.create(newUser);
+            result.cartId = await addCartToUser(result._id);
+
             done(null, result);
           } else {
-            const cartId = await addCartToUser(user._id);
-            user.cartId = cartId;
             done(null, user);
           }
         } catch (error) {
