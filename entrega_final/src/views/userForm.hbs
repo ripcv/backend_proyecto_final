@@ -1,31 +1,33 @@
 {{> userinfo}}
-<div class="userForm">
+<div class="formContainer">
+  <div class="editUser">
 
-<h1>Editar Usuario</h1>
-<form id="userForm">
-  <label for="first_name">Nombre:</label>
-  <input type="text" id="first_name" name="first_name" value="{{viewUser.first_name}}" required />
+<h2 class="h2title">Editar Usuario</h2>
+<form class="userForm" id="userForm">
+  <label class="labelForm" for="first_name">Nombre:</label>
+  <input class="inputForm" type="text" id="first_name" name="first_name" value="{{viewUser.first_name}}" required />
 
-  <label for="last_name">Apellido:</label>
-  <input type="text" id="last_name" name="last_name" value="{{viewUser.last_name}}" required />
+  <label class="labelForm" for="last_name">Apellido:</label>
+  <input class="inputForm" type="text" id="last_name" name="last_name" value="{{viewUser.last_name}}" required />
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" value="{{viewUser.email}}" disabled />
+  <label class="labelForm" for="email">Email:</label>
+  <input class="inputForm" type="email" id="email" name="email" value="{{viewUser.email}}" disabled />
 
-  <label for="age">Edad:</label>
-  <input type="number" id="age" name="age" value="{{viewUser.age}}" required />
+  <label class="labelForm" for="age">Edad:</label>
+  <input class="inputForm" type="number" id="age" name="age" value="{{viewUser.age}}" required />
 
-  <label for="role">Rol:</label>
+  <label class="labelForm" for="role">Rol:</label>
   
-  <select id="role" name="role" required>
+  <select class="inputForm" id="role" name="role" required>
   <option value="user" {{#eq viewUser.role 'user'}}selected{{/eq}}>Usuario</option>
   <option value="admin" {{#eq viewUser.role 'admin'}}selected{{/eq}}>Administrador</option>
    <option value="premium" {{#eq viewUser.role 'premium'}}selected{{/eq}}>Premium</option>
 </select>
 
 
-  <button type="submit">Guardar Cambios</button>
+  <button class="btnForm"  type="submit">Guardar Cambios</button>
 </form>
+</div>
 </div>
  <script>
 const userId = "{{viewUser._id}}";  // ID del usuario, útil para identificar en la actualización

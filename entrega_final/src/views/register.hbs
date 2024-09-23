@@ -1,15 +1,19 @@
-<h2>Registro</h2>
-<form action="/api/sessions/register" method="POST">
-  <label for="first_name">Nombre:</label>
-  <input type="text" name="first_name" required />
-  <label for="last_name">Apellido:</label>
-  <input type="text" name="last_name" required />
-  <label for="email">Email:</label>
-  <input type="email" name="email" required />
-  <label for="age">Edad:</label>
-  <input type="number" name="age" required />
-  <label for="password">Contraseña:</label>
-  <input type="password" name="password" required />
-  <button type="submit">Registrarse</button>
+<div class="formContainer">
+  <div class="register">
+    <h2 class="h2title">Registro</h2>
+<form class="registerForm" action="/api/sessions/register" method="POST">
+  <label class="labelForm" for="first_name">Nombre:</label>
+  <input class="inputForm" type="text" name="first_name" required />
+  <label class="labelForm" for="last_name">Apellido:</label>
+  <input class="inputForm" type="text" name="last_name" required />
+  <label class="labelForm" for="email">Email:</label>
+  <input class="inputForm" type="email" name="email" required />
+  <label class="labelForm" for="age">Edad:</label>
+  <input class="inputForm" type="number" name="age" required />
+  <label class="labelForm" for="password">Contraseña:</label>
+  <input class="inputForm" type="password" name="password" required />
+  <button class="btnForm" type="submit">Registrarse</button>
 </form>
 <a href="/">Iniciar sesión</a>
+  </div>
+</div>

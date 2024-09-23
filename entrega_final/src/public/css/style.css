@@ -1,4 +1,5 @@
 /* Estilos generales */
+
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -156,7 +157,135 @@ h1 {
   text-decoration: none;
 }
 
+/*Login , Register , reset Css*/
 
+.formContainer{
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login ,.register , .resetPassword,  .changePassword ,.editUser, .editProduct,.profile{
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.h2title {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.loginForm, .registerForm, .resetForm, .changeForm ,.userForm {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.labelForm{
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+  text-align: left;
+}
+
+.inputForm {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputForm:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+
+.btnForm {
+  background-color: #616a74;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.btnclear {
+  font-size:10px;
+  background-color: #f55858;
+}
+
+
+.btnForm:hover {
+  background-color: #47494b;
+}
+.btnclear:hover {
+  background-color: #e2aeae;
+}
+
+.login div button {
+  background-color: #333;
+}
+
+.login div button:hover {
+  background-color: #555;
+}
+
+.login a {
+  text-decoration: none;
+  color: #007bff;
+  margin-top: 10px;
+}
+
+.login a:hover {
+  text-decoration: underline;
+}
+
+.register a {
+  text-decoration: none;
+  color: #007bff;
+  margin-top: 10px;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+.premiumUpdate{
+  margin-top: 20px;
+  max-width: 60%;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+.inputContainer button{
+  margin-left:10px;
+}
 /* Logger Test */
 
 .loggerContainer{

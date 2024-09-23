@@ -67,7 +67,7 @@ const initializePassport = () => {
       {
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: process.env.CALLBACK_URL,
+        callbackURL: `${process.env.BASE_URL}${process.env.CALLBACK_PATH}`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

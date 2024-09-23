@@ -1,30 +1,35 @@
-<h1>{{#if product}}Editar Producto{{else}}Crear Producto{{/if}}</h1>
-<form id="productForm">
-  <label for="title">Título:</label>
-  <input type="text" id="title" name="title" value="{{product.title}}" required />
+{{> userinfo}}
+<div class="formContainer">
+  <div class="editProduct">
+    <h2>{{#if product}}Editar Producto{{else}}Crear Producto{{/if}}</h2>
+<form class="productForm" id="productForm">
+  <label class="labelForm" for="title">Título:</label>
+  <input class="inputForm" type="text" id="title" name="title" value="{{product.title}}" required />
 
-  <label for="description">Descripción:</label>
-  <input type="text" id="description" name="description" value="{{product.description}}"  />
+  <label class="labelForm" for="description">Descripción:</label>
+  <input class="inputForm" type="text" id="description" name="description" value="{{product.description}}"  />
 
-  <label for="price">Precio:</label>
-  <input type="number" id="price" name="price" value="{{product.price}}" required />
+  <label class="labelForm" for="price">Precio:</label>
+  <input class="inputForm" type="number" id="price" name="price" value="{{product.price}}" required />
 
-  <label for="category">Categoría:</label>
-  <input type="text" id="category" name="category" value="{{product.category}}" required />
+  <label class="labelForm" for="category">Categoría:</label>
+  <input class="inputForm" type="text" id="category" name="category" value="{{product.category}}" required />
 
-  <label for="code">Código:</label>
-  <input type="text" id="code" name="code" value="{{product.code}}" required />
+  <label class="labelForm" for="code">Código:</label>
+  <input class="inputForm" type="text" id="code" name="code" value="{{product.code}}" required />
 
-  <label for="stock">Stock:</label>
-  <input type="number" id="stock" name="stock" value="{{product.stock}}" required />
+  <label class="labelForm" for="stock">Stock:</label>
+  <input class="inputForm" type="number" id="stock" name="stock" value="{{product.stock}}" required />
 
-  <label for="owner">Owner:</label>
-  <input type="string" id="owner" name="owner" value="{{owner}}" required {{#if product}} {{else}}disabled {{/if}}/>
+  <label class="labelForm" for="owner">Owner:</label>
+  <input class="inputForm" type="string" id="owner" name="owner" value="{{owner}}" required {{#if product}} {{else}}disabled {{/if}}/>
   <input type="hidden" id="ownerId" name="ownerId" value="{{product.owner}}" required />
 
-  <button type="submit">{{#if product}}Guardar Cambios{{else}}Crear Producto{{/if}}</button>
+  <button class="btnForm" type="submit">{{#if product}}Guardar Cambios{{else}}Crear Producto{{/if}}</button>
 </form>
 
+  </div>
+</div>
 <script>
 const productId = "{{product._id}}";
 </script>

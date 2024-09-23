@@ -1,40 +1,53 @@
 {{> userinfo}}
-<div>
-    <h2>Perfil de Usuario</h2>
+<div class="formContainer">
+<div class="profile">
+        <h2 class="h2title">Perfil de Usuario</h2>
 <p>Nombre: {{user.first_name}}</p>
 <p>Apellido: {{user.last_name}}</p>
 <p>Email: {{user.email}}</p>
 <p>Edad: {{user.age}}</p>
-</div>
-
-
 
 <form action="/api/sessions/logout" method="POST">
-    <button type="submit">Cerrar Sesión</button>
+    <button class="btnForm" type="submit">Cerrar Sesión</button>
 </form>
-<div>
-{{#roleCheck user.role}}
+</div>
+
+<div class="profile premiumUpdate">
+    {{#roleCheck user.role}}
    {{#eq ../user.role 'premium'}} <p>Para darse de baja de premium favor contactarse con la administración</p> {{/eq}}
    {{else}}
    
-        <h2>Actualizar a premium</h2>
-        <p>Para actualizar a premium debes subir 3 archivos</p>
+       <div class="title"> 
+        <h2 class="h2title">Actualizar a premium</h2>
+        <p>Para actualizar a premium debes subir 3 archivos</p></div>
+
 
     <form action="/api/users/{{../user.id}}/documents" method="post" enctype="multipart/form-data">
-           <label for="file1">Identificación:</label>
-        <input type="file" name="identificacion"  id="identificacion"required>
-         <button type="button" onclick="clearFileInput('identificacion')">Limpiar</button><br><br>
-        <label for="file2">Comprobante de domicilio:</label>
-        <input type="file" name="comprobante_domicilio"  id="comprobante_domicilio" required>
-          <button type="button" onclick="clearFileInput('comprobante_domicilio')">Limpiar</button><br><br>
-        <label for="file3">Comprobante estado de cuenta:</label>
-        <input type="file" name="comprobante_cuenta"  id="comprobante_cuenta" required> 
-         <button type="button" onclick="clearFileInput('comprobante_cuenta')">Limpiar</button><br><br>
-        <button type="submit">Subir archivos</button>
+           <div class="inputContainer">
+            <label class="labelForm" for="file1">Identificación:</label>
+        <input class="inputForm" type="file" name="identificacion"  id="identificacion"required>
+         <button class="btnForm btnclear" type="button" onclick="clearFileInput('identificacion')">X</button><br><br>
+           </div>
+        <div class="inputContainer">
+            <label class="labelForm" for="file2">Comprobante de domicilio:</label>
+        <input class="inputForm" type="file" name="comprobante_domicilio"  id="comprobante_domicilio" required>
+          <button class="btnForm btnclear" type="button" onclick="clearFileInput('comprobante_domicilio')">X</button><br><br>
+        </div>
+        <div class="inputContainer">
+        <label class="labelForm" for="file3">Comprobante estado de cuenta:</label>
+        <input class="inputForm" type="file" name="comprobante_cuenta"  id="comprobante_cuenta" required> 
+         <button class="btnForm btnclear" type="button" onclick="clearFileInput('comprobante_cuenta')">X</button><br><br>
+        </div>
+        <button class="btnForm"  type="submit">Subir archivos</button>
     </form>
 
 {{/roleCheck}}
 </div>
+</div>
+
+</div>
+
+
 
 
 
