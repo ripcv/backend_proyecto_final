@@ -26,11 +26,12 @@
     {{#unless pageChat}}
     <div><a href="/chat"><button>Chat</button></a></div>
     {{/unless}}
-    {{#roleCheck user.role}} 
-    {{#unless pageChat}}
+    {{#eq user.role 'admin'}}
+     {{#unless ../pageUsers}}
     <div><a href="/users"><button>Users</button></a></div>
     {{/unless}}
-    {{/roleCheck}}
+    {{/eq}}
+   
     <div class="logout">
       <form action="/api/sessions/logout" method="POST">
         <button type="submit">Cerrar Sesión</button>

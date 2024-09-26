@@ -5,7 +5,7 @@ class ViewUserController {
 
     async getAllUsers(req, res){
         const users = await UserService.getAllUsers()
-        res.render("user", {viewUsers : users, user: req.session.user})
+        res.render("user", {viewUsers : users, user: req.session.user , pageUsers: "true"})
     }
 
     async getUserById(req,res){
